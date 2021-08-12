@@ -1,11 +1,7 @@
-import React from 'react';
-import './Dashboard.scss'
+import React from "react";
+import "./Dashboard.scss";
 const Dashboard = () => {
-  return (
-    <>
-       Dashboard
-    </>
-  );
+  return <>Dashboard</>;
 };
 
 export default Dashboard;
