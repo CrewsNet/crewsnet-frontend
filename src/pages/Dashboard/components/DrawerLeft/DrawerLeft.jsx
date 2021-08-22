@@ -185,7 +185,9 @@ const DrawerLeft = (props) => {
           justifyContent: "center",
         }}
       >
-        <Typography variant="h5">Crews Net</Typography>
+        <Typography variant="h4" style={{ fontWeight: "700", letterSpacing: "1px" }}>
+          CrewsNet
+        </Typography>
       </div>
       <Divider variant="middle" />
       <List component="nav" aria-label="main mailbox folders">
