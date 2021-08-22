@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import React, { useEffect, useState } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import Typography from "@material-ui/core/Typography"
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -9,15 +9,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#181818",
     minHeight: "100vh",
   },
-}));
+}))
 
 const Contest = () => {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <div className={classes.content}>
       <Typography>Contest</Typography>
     </div>
-  );
-};
+  )
+}
 
-export default Contest;
+export default Contest
