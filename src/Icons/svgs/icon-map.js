@@ -1,35 +1,23 @@
-import { ReactComponent as ArrowDown } from "./arrowDown.svg"
-import { ReactComponent as Analytics } from "./analytics.svg"
-import { ReactComponent as Dot } from "./dot.svg"
-import { ReactComponent as Exit } from "./exit.svg"
-import { ReactComponent as Eye } from "./eye.svg"
-import { ReactComponent as Mail } from "./mail.svg"
-import { ReactComponent as Message } from "./message.svg"
-import { ReactComponent as Nodes } from "./nodes.svg"
-import { ReactComponent as Pencil } from "./pencil.svg"
-import { ReactComponent as People } from "./people.svg"
-import { ReactComponent as Plus } from "./plus.svg"
-import { ReactComponent as Settings } from "./settings.svg"
-import { ReactComponent as TailArrowRight } from "./tailArrowRight.svg"
-import { ReactComponent as Clock } from "./clock.svg"
-import { ReactComponent as Feed } from "./feed.svg"
+import { ReactComponent as Feed } from "./feed.svg";
+import { ReactComponent as Profile } from "./profile.svg";
+import { ReactComponent as Project } from "./project.svg";
+import { ReactComponent as Contest } from "./contest.svg";
+import { ReactComponent as SavedContest } from "./savedContest.svg";
+import { ReactComponent as Message } from "./message.svg";
+import { ReactComponent as ChatMessage } from "./chatMessage.svg";
+import { ReactComponent as Logout } from "./logout.svg";
+import { ReactComponent as Notification } from "./notification.svg";
 
 const svgIcons = {
-  analytics: Analytics,
-  arrowDown: ArrowDown,
-  clock: Clock,
-  dot: Dot,
-  exit: Exit,
+  chatMessage: ChatMessage,
+  contest: Contest,
   feed: Feed,
-  eye: Eye,
-  mail: Mail,
+  logout: Logout,
   message: Message,
-  nodes: Nodes,
-  pencil: Pencil,
-  people: People,
-  plus: Plus,
-  settings: Settings,
-  tailArrowRight: TailArrowRight,
-}
+  notification: Notification,
+  profile: Profile,
+  project: Project,
+  savedContest: SavedContest,
+};
 
-export default svgIcons
+export default svgIcons;

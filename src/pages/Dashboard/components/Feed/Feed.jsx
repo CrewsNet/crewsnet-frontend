@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import Typography from "@material-ui/core/Typography"
-import { Colors } from "../../../../styles/Colors"
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import { Colors } from "../../../../styles/Colors";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -10,15 +10,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: Colors.blackShade1,
     minHeight: "100vh",
   },
-}))
+}));
 
 const Feed = () => {
-  const classes = useStyles()
+  const classes = useStyles();
   return (
     <div className={classes.content}>
       <Typography>Feed</Typography>
     </div>
-  )
-}
+  );
+};
 
-export default Feed
+export default Feed;
