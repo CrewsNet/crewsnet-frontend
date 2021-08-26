@@ -23,9 +23,9 @@ const App = () => {
     <Router history={customHistory}>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route path="/" exact component={LandingPage}></Route>
-          <Route path="/signin" exact component={SignIn}></Route>
-          <Route path="/dashboard" component={Dashboard}></Route>
+          <Route path="/" exact component={LandingPage} />
+          <Route path="/signin" exact component={SignIn}/>
+          <Route path="/dashboard" component={Dashboard}/>
           <Route component={PageNotFound}></Route>
         </Switch>
       </ThemeProvider>

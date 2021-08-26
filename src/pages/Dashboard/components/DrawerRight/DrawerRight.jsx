@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,7 +10,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Hidden from "@material-ui/core/Hidden";
-
+import { Colors } from "../../../../styles/Colors";
 import { withRouter } from "react-router-dom";
 import { Notification as NotificationSVG } from "../../../../Icons/Icons";
 import { Logout as LogoutSVG } from "../../../../Icons/Icons";
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: "#181818",
+    backgroundColor: Colors.blackShade1,
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,

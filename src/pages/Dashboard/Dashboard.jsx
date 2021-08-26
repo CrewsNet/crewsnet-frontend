@@ -8,7 +8,6 @@ import {
   Route,
   Switch,
   withRouter,
-  Redirect,
 } from "react-router-dom";
 import Feed from "./components/Feed/Feed";
 import Projects from "./components/Projects/Project";
@@ -27,9 +26,6 @@ const useStyles = makeStyles({
 
 const Dashboard = (props) => {
   const classes = useStyles();
-
-  // if (props.location.pathname == "/dashboard")
-  //   return <Redirect to="/dashboard/feed" />;
 
   return (
     <div className={classes.container}>
