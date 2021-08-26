@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,9 +10,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Hidden from "@material-ui/core/Hidden";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { Link, withRouter } from "react-router-dom";
-import QuestionAnswerRoundedIcon from "@material-ui/icons/QuestionAnswerRounded";
+import { Colors } from "../../../../styles/Colors";
+import { withRouter } from "react-router-dom";
+import { Notification as NotificationSVG } from "../../../../Icons/Icons";
+import { Logout as LogoutSVG } from "../../../../Icons/Icons";
+import { ChatMessage as ChatMessageSVG } from "../../../../Icons/Icons";
 
 import { customHistory } from "../../../../App";
 
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: "#181818",
+    backgroundColor: Colors.blackShade1,
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -95,23 +97,24 @@ const DrawerRight = (props) => {
                 ujjwalgarg.252@gmail.com
               </p>
             </div>
-            <div style={{ flexGrow: "1" }}>
-              {/* <Link
-                to="/signin"
-                style={{
-                  color: "white",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              > */}
-              <ExitToAppIcon
+            <div
+              style={{
+                flexGrow: "1",
+                display: "flex",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <NotificationSVG size="1.1rem" cursor="pointer" />
+              <LogoutSVG
+                size="1.1rem"
+                cursor="pointer"
                 onClick={() => {
-                  console.log(customHistory);
                   customHistory.push("/signin");
                 }}
+                // style={{
+                //   cursor: "pointer",
+                // }}
               />
-
-              {/* </Link> */}
             </div>
           </div>
           <Divider />
@@ -129,11 +132,11 @@ const DrawerRight = (props) => {
               style={{
                 display: "flex",
                 color: "#E0C097",
-                padding: "10px 0 20px",
+                padding: "10px 0",
               }}
             >
-              <div style={{ padding: " 0px 12px 0 14px" }}>
-                <QuestionAnswerRoundedIcon />
+              <div style={{ padding: " 4px 12px 0 14px" }}>
+                <ChatMessageSVG size="0.9rem" />
               </div>
               <div>Recent Message</div>
             </div>

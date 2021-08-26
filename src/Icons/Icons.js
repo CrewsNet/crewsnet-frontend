@@ -1,18 +1,12 @@
-import React from "react"
-import Icon from "./Icon"
+import React from "react";
+import Icon from "./Icon";
 
-export const ArrowDown = (props) => <Icon {...props} name="arrowDown" />
-export const Analytics = (props) => <Icon {...props} name="analytics" />
-export const Clock = (props) => <Icon {...props} name="clock" />
-export const Dot = (props) => <Icon {...props} name="dot" />
-export const Exit = (props) => <Icon {...props} name="exit" />
-export const Feed = (props) => <Icon {...props} name="feed" />
-export const Eye = (props) => <Icon {...props} name="eye" />
-export const Mail = (props) => <Icon {...props} name="mail" />
-export const Message = (props) => <Icon {...props} name="message" />
-export const Nodes = (props) => <Icon {...props} name="nodes" />
-export const Pencil = (props) => <Icon {...props} name="pencil" />
-export const People = (props) => <Icon {...props} name="people" />
-export const Plus = (props) => <Icon {...props} name="plus" />
-export const Settings = (props) => <Icon {...props} name="settings" />
-export const TailArrowRight = (props) => <Icon {...props} name="tailArrowRight" />
+export const ChatMessage = (props) => <Icon {...props} name="chatMessage" />;
+export const Contest = (props) => <Icon {...props} name="contest" />;
+export const Feed = (props) => <Icon {...props} name="feed" />;
+export const Logout = (props) => <Icon {...props} name="logout" />;
+export const Message = (props) => <Icon {...props} name="message" />;
+export const Notification = (props) => <Icon {...props} name="notification" />;
+export const Profile = (props) => <Icon {...props} name="profile" />;
+export const Project = (props) => <Icon {...props} name="project" />;
+export const SavedContest = (props) => <Icon {...props} name="savedContest" />;
