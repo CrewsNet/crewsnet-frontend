@@ -4,6 +4,7 @@ import { Box, Grid, TextField, Button, Typography, Checkbox, FormControlLabel, I
 import { makeStyles } from "@material-ui/core/styles"
 import { Colors } from "../../styles/Colors"
 import { Swiper, SwiperSlide } from "swiper/react"
+import { Link } from "react-router-dom"
 import "swiper/swiper-bundle.min.css"
 import "./SignIn.scss"
 // swiper core styles
@@ -170,9 +171,12 @@ const SignIn = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} style={{ textAlign: "center", marginTop: "0.8rem" }}>
-              <Button variant="contained" style={{ textAlign: "center" }} className={clsx(classes.signInButtons, classes.loginButton)}>
-                {newUser ? " Sign Up" : "Login"}
-              </Button>
+              <Link to="/dashboard">
+                {" "}
+                <Button variant="contained" style={{ textAlign: "center" }} className={clsx(classes.signInButtons, classes.loginButton)}>
+                  {newUser ? " Sign Up" : "Login"}
+                </Button>
+              </Link>
             </Grid>
             <Grid xs={12} style={{ marginTop: "0.7rem" }}>
               <Typography variant="caption" color="initial" style={{ letterSpacing: "0.6px" }}>
