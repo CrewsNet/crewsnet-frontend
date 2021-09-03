@@ -20,7 +20,10 @@ import { Profile as ProfileSVG } from "../../../../assets/Icons/Icons";
 import { Project as ProjectSVG } from "../../../../assets/Icons/Icons";
 import { SavedContest as SavedContestSVG } from "../../../../assets/Icons/Icons";
 import { Message as MessageSVG } from "../../../../assets/Icons/Icons";
+import { Logout as LogoutSVG } from "../../../../assets/Icons/Icons";
 import { Colors } from "../../../../styles/Colors";
+
+import { customHistory } from "../../../../App";
 
 const drawerWidth = 280;
 
@@ -81,6 +84,7 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       icon: <FeedSVG size="1.2rem" />,
       onClick: (event) => {
         handleListItemClick(event, 0);
+        handleDrawerToggle();
         history.push("");
       },
     },
@@ -89,6 +93,7 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       icon: <ProjectSVG size="1.2rem" />,
       selected: 1,
       onClick: (event) => {
+        handleDrawerToggle();
         handleListItemClick(event, 1);
         history.push("/projects");
       },
@@ -98,6 +103,7 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       icon: <ProfileSVG size="1.2rem" />,
       selected: 2,
       onClick: (event) => {
+        handleDrawerToggle();
         handleListItemClick(event, 2);
         history.push("/profile");
       },
@@ -107,6 +113,7 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       icon: <ContestSVG size="1.2rem" />,
       selected: 3,
       onClick: (event) => {
+        handleDrawerToggle();
         handleListItemClick(event, 3);
         history.push("/contest");
       },
@@ -116,6 +123,7 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       icon: <SavedContestSVG size="1.2rem" />,
       selected: 4,
       onClick: (event) => {
+        handleDrawerToggle();
         handleListItemClick(event, 4);
         history.push("/savedcontest");
       },
@@ -125,6 +133,7 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       icon: <MessageSVG size="1.2rem" />,
       selected: 5,
       onClick: (event) => {
+        handleDrawerToggle();
         handleListItemClick(event, 5);
         history.push("/messages");
       },
@@ -160,7 +169,7 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
               onClick={onClick}
               key={index}
             >
-              {icon && <ListItemIcon>{icon}</ListItemIcon>}
+              <ListItemIcon>{icon}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           );
@@ -187,6 +196,22 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
             }}
           >
             {drawer}
+            <div
+              style={{ display: "flex", alignItems: "flex-end", flexGrow: 1 }}
+            >
+              <ListItem
+                button
+                onClick={() => {
+                  customHistory.push("/signin");
+                }}
+                style={{ backgroundColor: "goldenrod" }}
+              >
+                <ListItemIcon style={{ minWidth: "32px" }}>
+                  <LogoutSVG size="1.2rem" />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </ListItem>
+            </div>
           </Drawer>
         </Hidden>
         <Hidden xsDown>
