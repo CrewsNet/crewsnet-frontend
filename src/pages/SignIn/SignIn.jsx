@@ -18,16 +18,14 @@ import LoginSVG1 from "../../assets/images/login1.svg"
 import LoginSVG2 from "../../assets/images/login2.svg"
 import { Google as GoogleSVG, Github as GithubSVG } from "../../assets/Icons/Icons"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
-import Input from "@material-ui/core/Input"
-
 import OutlinedInput from "@material-ui/core/OutlinedInput"
 import InputLabel from "@material-ui/core/InputLabel"
 import InputAdornment from "@material-ui/core/InputAdornment"
-
 import FormControl from "@material-ui/core/FormControl"
-
 import Visibility from "@material-ui/icons/Visibility"
 import VisibilityOff from "@material-ui/icons/VisibilityOff"
+import useGoogleAuth from "../../data-access/useGoogleAuth/useGoogleAuth"
+
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation])
 
@@ -101,16 +99,46 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [newUser, setNewUser] = useState(false)
 
+  const { isLoading, message, setMessage, onGoogleAuthSubmit } = useGoogleAuth()
+
+  const handleGoogleAuthSubmit = async () => {
+    await onGoogleAuthSubmit()
+  }
+
   const classes = useStyles()
   return (
     <Box className={clsx(classes.signInContainer, "login-page")} display="flex" alignItems="center" justifyContent="center">
-      <Grid container md={9} style={{ overflow: "hidden", borderRadius: "15px", border: `rgb(38, 38, 38,0.2) 1px solid` }}>
+      <Grid
+        container
+        md={9}
+        style={{
+          overflow: "hidden",
+          borderRadius: "15px",
+          border: `rgb(38, 38, 38,0.2) 1px solid`,
+        }}
+      >
         <Grid item p={0} container xs={12} lg={6} style={{ height: matches1280 ? "100vh" : "" }} className={classes.signIn} display="flex" justifyContent="center" alignContent="center">
           <Grid xs={11} sm={6} md={8} item style={{ position: "relative" }}>
-            <Typography variant="h3" color="initial" style={{ fontWeight: "700", marginBottom: "0.8rem", letterSpacing: "0.7px" }}>
+            <Typography
+              variant="h3"
+              color="initial"
+              style={{
+                fontWeight: "700",
+                marginBottom: "0.8rem",
+                letterSpacing: "0.7px",
+              }}
+            >
               CrewsNet
             </Typography>
-            <Typography variant="h4" color="initial" style={{ marginBottom: "7px", fontWeight: "600", letterSpacing: "0.7px" }}>
+            <Typography
+              variant="h4"
+              color="initial"
+              style={{
+                marginBottom: "7px",
+                fontWeight: "600",
+                letterSpacing: "0.7px",
+              }}
+            >
               {/* {newUser ? "Hello There 👋" : "Login"} */}
               {newUser ? "Sign Up" : "Login"}
             </Typography>
@@ -120,7 +148,7 @@ const SignIn = () => {
             {/* <TextField id="outlined-basic" label="Email" variant="outlined" /> */}
             <Grid xs={12} container justifyContent="space-between" style={{ marginTop: "1rem" }}>
               <Grid item xs={6}>
-                <Button variant="contained" startIcon={<GoogleSVG size="1.7rem" />} className={classes.signInButtons}>
+                <Button variant="contained" startIcon={<GoogleSVG size="1.7rem" />} className={classes.signInButtons} onClick={() => handleGoogleAuthSubmit()}>
                   {!matches375 ? "with Google" : "Sign In"}
                 </Button>
               </Grid>
@@ -130,7 +158,14 @@ const SignIn = () => {
                 </Button>
               </Grid>
             </Grid>
-            <Grid xs={12} style={{ textAlign: "center", marginTop: "1rem", marginBottom: "1.4rem" }}>
+            <Grid
+              xs={12}
+              style={{
+                textAlign: "center",
+                marginTop: "1rem",
+                marginBottom: "1.4rem",
+              }}
+            >
               <Typography variant="caption" color="initial" textAlign="center" className={classes.legend}>
                 or Login with Email
               </Typography>
@@ -180,7 +215,8 @@ const SignIn = () => {
             </Grid>
             <Grid xs={12} style={{ marginTop: "0.7rem" }}>
               <Typography variant="caption" color="initial" style={{ letterSpacing: "0.6px" }}>
-                {newUser ? "Aready Registered ?" : "Not registered yet ?"}&nbsp;&nbsp;
+                {newUser ? "Aready Registered ?" : "Not registered yet ?"}
+                &nbsp;&nbsp;
                 <Typography
                   variant="caption"
                   style={{ fontWeight: "700", cursor: "pointer" }}
