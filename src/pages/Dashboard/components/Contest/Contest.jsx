@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Colors } from "../../../../styles/Colors";
-import { Typography, Grid, CircularProgress } from "@material-ui/core";
-import Axios from "axios";
-
-import BookmarkBorderRoundedIcon from "@material-ui/icons/BookmarkBorderRounded";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import "./Contest.scss";
-import moment from "moment";
-import { useImmer } from "use-immer";
+import React, { useEffect, useState } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import { Colors } from "../../../../styles/Colors"
+import { Typography, Grid, CircularProgress } from "@material-ui/core"
+import BookmarkBorderRoundedIcon from "@material-ui/icons/BookmarkBorderRounded"
+import CheckCircleIcon from "@material-ui/icons/CheckCircle"
+import "./Contest.scss"
+import { useImmer } from "use-immer"
+import useContest from "../../../../data-access/useContests/useContest"
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -17,48 +15,51 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: Colors.blackShade1,
     minHeight: "100vh",
   },
-}));
+}))
 
 const Contest = () => {
-  const classes = useStyles();
-  const [contest, setContest] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const classes = useStyles()
+  const { isLoading, contests, getContest } = useContest()
+
+  // const [isLoading, setIsLoading] = useState(true)
   const [state, setState] = useImmer({
     contestSaved: false,
     key: [],
-  });
+  })
+  useEffect(() => getContest(), [])
 
-  const handleContestSaving = async (contest, key) => {
+  const handleContestSaving = async (contests, key) => {
     try {
-      // const response = await Axios.post("", { contest });
-      console.log(key, contest);
+      // const response = await Axios.post("", { contests });
+      console.log(key, contests)
       setState((draft) => {
-        draft.contestSaved = true;
-        draft.key.push(key);
-      });
+        draft.contestSaved = true
+        draft.key.push(key)
+      })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
-  useEffect(() => {
-    const ourRequest = Axios.CancelToken.source();
-    async function fetchContest() {
-      try {
-        const response = await Axios.get("https://kontests.net/api/v1/all", {
-          cancelToken: ourRequest.token,
-        });
-        setContest(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchContest();
-    return () => {
-      ourRequest.cancel();
-    };
-  }, []);
+  // useEffect(() => {
+  //   const ourRequest = Axios.CancelToken.source()
+  //   async function fetchContest() {
+  //     try {
+  //       const response = await Axios.get("https://kontests.net/api/v1/all", {
+  //         cancelToken: ourRequest.token,
+  //       })
+  //       setContest(response.data)
+  //       console.log(response.data)
+  //       setIsLoading(false)
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   fetchContest()
+  //   return () => {
+  //     ourRequest.cancel()
+  //   }
+  // }, [])
 
   if (isLoading) {
     return (
@@ -70,19 +71,16 @@ const Contest = () => {
           justifyContent: "center",
         }}
       >
-        <CircularProgress
-          color="secondary"
-          style={{ width: "100px", height: "auto" }}
-        />
+        <CircularProgress color="secondary" style={{ width: "100px", height: "auto" }} />
       </div>
-    );
+    )
   }
 
   return (
     <div className={classes.content}>
       <Grid container className="container">
-        {contest.map((contest, key) => {
-          const { name, site, start_time } = contest;
+        {contests.map((contests, key) => {
+          const { name, site, start_time } = contests
           return (
             <>
               <Grid item xl={4} style={{ margin: "auto" }}>
@@ -90,14 +88,10 @@ const Contest = () => {
                   <div
                     className="bookmark"
                     onClick={() => {
-                      handleContestSaving(contest, key);
+                      handleContestSaving(contests, key)
                     }}
                   >
-                    {state.contestSaved && state.key.includes(key) ? (
-                      <CheckCircleIcon fontSize="large" />
-                    ) : (
-                      <BookmarkBorderRoundedIcon fontSize="large" />
-                    )}
+                    {state.contestSaved && state.key.includes(key) ? <CheckCircleIcon fontSize="large" /> : <BookmarkBorderRoundedIcon fontSize="large" />}
                   </div>
                   <div className="contest-date">
                     <Typography variant="h3">08</Typography>
@@ -111,11 +105,11 @@ const Contest = () => {
                 </div>
               </Grid>
             </>
-          );
+          )
         })}
       </Grid>
     </div>
-  );
-};
+  )
+}
 
-export default Contest;
+export default Contest

@@ -1,46 +1,33 @@
-import React, { useState } from "react";
-import clsx from "clsx";
-import {
-  Box,
-  Grid,
-  TextField,
-  Button,
-  Typography,
-  Checkbox,
-  FormControlLabel,
-  IconButton,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { Colors } from "../../styles/Colors";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Link } from "react-router-dom";
-import "swiper/swiper-bundle.min.css";
-import "./SignIn.scss";
+import React, { useState } from "react"
+import clsx from "clsx"
+import { Box, Grid, TextField, Button, Typography, Checkbox, FormControlLabel, IconButton } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
+import { Colors } from "../../styles/Colors"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Link } from "react-router-dom"
+import "swiper/swiper-bundle.min.css"
+import "./SignIn.scss"
 // swiper core styles
-import "swiper/swiper.min.css";
+import "swiper/swiper.min.css"
 // modules styles
-import "swiper/components/navigation/navigation.min.css";
-import "swiper/components/pagination/pagination.min.css";
+import "swiper/components/navigation/navigation.min.css"
+import "swiper/components/pagination/pagination.min.css"
 // import Swiper core and required modules
-import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper";
-import LoginSVG1 from "../../assets/images/login1.svg";
-import LoginSVG2 from "../../assets/images/login2.svg";
-import {
-  Google as GoogleSVG,
-  Github as GithubSVG,
-} from "../../assets/Icons/Icons";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper"
+import LoginSVG1 from "../../assets/images/login1.svg"
+import LoginSVG2 from "../../assets/images/login2.svg"
+import { Google as GoogleSVG, Github as GithubSVG } from "../../assets/Icons/Icons"
+import useMediaQuery from "@material-ui/core/useMediaQuery"
+import OutlinedInput from "@material-ui/core/OutlinedInput"
+import InputLabel from "@material-ui/core/InputLabel"
+import InputAdornment from "@material-ui/core/InputAdornment"
+import FormControl from "@material-ui/core/FormControl"
+import Visibility from "@material-ui/icons/Visibility"
+import VisibilityOff from "@material-ui/icons/VisibilityOff"
+import useGoogleAuth from "../../data-access/useGoogleAuth/useGoogleAuth"
 
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import InputLabel from "@material-ui/core/InputLabel";
-import InputAdornment from "@material-ui/core/InputAdornment";
-
-import FormControl from "@material-ui/core/FormControl";
-
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
 // install Swiper modules
-SwiperCore.use([Autoplay, Pagination, Navigation]);
+SwiperCore.use([Autoplay, Pagination, Navigation])
 
 const useStyles = makeStyles({
   signInContainer: {
@@ -103,23 +90,24 @@ const useStyles = makeStyles({
     fontWeight: "600",
     fontSize: "1.2rem",
   },
-});
+})
 
 const SignIn = () => {
-  const matches960 = useMediaQuery("(max-width:960px)");
-  const matches375 = useMediaQuery("(max-width:375px)");
-  const matches1280 = useMediaQuery("(max-width:1280px)");
-  const [showPassword, setShowPassword] = useState(false);
-  const [newUser, setNewUser] = useState(false);
+  const matches960 = useMediaQuery("(max-width:960px)")
+  const matches375 = useMediaQuery("(max-width:375px)")
+  const matches1280 = useMediaQuery("(max-width:1280px)")
+  const [showPassword, setShowPassword] = useState(false)
+  const [newUser, setNewUser] = useState(false)
 
-  const classes = useStyles();
+  const { isLoading, message, setMessage, onGoogleAuthSubmit } = useGoogleAuth()
+
+  const handleGoogleAuthSubmit = async () => {
+    await onGoogleAuthSubmit()
+  }
+
+  const classes = useStyles()
   return (
-    <Box
-      className={clsx(classes.signInContainer, "login-page")}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Box className={clsx(classes.signInContainer, "login-page")} display="flex" alignItems="center" justifyContent="center">
       <Grid
         container
         md={9}
@@ -129,18 +117,7 @@ const SignIn = () => {
           border: `rgb(38, 38, 38,0.2) 1px solid`,
         }}
       >
-        <Grid
-          item
-          p={0}
-          container
-          xs={12}
-          lg={6}
-          style={{ height: matches1280 ? "100vh" : "" }}
-          className={classes.signIn}
-          display="flex"
-          justifyContent="center"
-          alignContent="center"
-        >
+        <Grid item p={0} container xs={12} lg={6} style={{ height: matches1280 ? "100vh" : "" }} className={classes.signIn} display="flex" justifyContent="center" alignContent="center">
           <Grid xs={11} sm={6} md={8} item style={{ position: "relative" }}>
             <Typography
               variant="h3"
@@ -169,28 +146,14 @@ const SignIn = () => {
               Get connected with the world of Projects!
             </Typography>
             {/* <TextField id="outlined-basic" label="Email" variant="outlined" /> */}
-            <Grid
-              xs={12}
-              container
-              justifyContent="space-between"
-              style={{ marginTop: "1rem" }}
-            >
+            <Grid xs={12} container justifyContent="space-between" style={{ marginTop: "1rem" }}>
               <Grid item xs={6}>
-                <Button
-                  variant="contained"
-                  startIcon={<GoogleSVG size="1.7rem" />}
-                  className={classes.signInButtons}
-                >
+                <Button variant="contained" startIcon={<GoogleSVG size="1.7rem" />} className={classes.signInButtons} onClick={() => handleGoogleAuthSubmit()}>
                   {!matches375 ? "with Google" : "Sign In"}
                 </Button>
               </Grid>
               <Grid item xs={6} style={{ textAlign: "end" }}>
-                <Button
-                  variant="contained"
-                  style={{ textAlign: "start" }}
-                  startIcon={<GithubSVG size="1.7rem" color="#161614" />}
-                  className={clsx(classes.signInButtons, "github-button")}
-                >
+                <Button variant="contained" style={{ textAlign: "start" }} startIcon={<GithubSVG size="1.7rem" color="#161614" />} className={clsx(classes.signInButtons, "github-button")}>
                   {!matches375 ? "with Github" : "Sign in"}
                 </Button>
               </Grid>
@@ -203,54 +166,21 @@ const SignIn = () => {
                 marginBottom: "1.4rem",
               }}
             >
-              <Typography
-                variant="caption"
-                color="initial"
-                textAlign="center"
-                className={classes.legend}
-              >
+              <Typography variant="caption" color="initial" textAlign="center" className={classes.legend}>
                 or Login with Email
               </Typography>
             </Grid>
             <Grid className="formLogin">
-              {newUser && (
-                <TextField
-                  type="text"
-                  className={classes.inputFields}
-                  id="outlined-basic"
-                  label="Name"
-                  variant="outlined"
-                />
-              )}
-              <TextField
-                type="email"
-                className={classes.inputFields}
-                id="outlined-basic"
-                label="Email"
-                variant="outlined"
-              />
-              <FormControl
-                className={clsx(
-                  classes.margin,
-                  classes.textField,
-                  classes.inputFields
-                )}
-                variant="outlined"
-              >
-                <InputLabel htmlFor="outlined-adornment-password">
-                  Password
-                </InputLabel>
+              {newUser && <TextField type="text" className={classes.inputFields} id="outlined-basic" label="Name" variant="outlined" />}
+              <TextField type="email" className={classes.inputFields} id="outlined-basic" label="Email" variant="outlined" />
+              <FormControl className={clsx(classes.margin, classes.textField, classes.inputFields)} variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? "text" : "password"}
                   endAdornment={
                     <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => setShowPassword(!showPassword)}
-                        onMouseDown={(e) => e.preventDefault()}
-                        edge="end"
-                      >
+                      <IconButton aria-label="toggle password visibility" onClick={() => setShowPassword(!showPassword)} onMouseDown={(e) => e.preventDefault()} edge="end">
                         {showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
@@ -266,10 +196,7 @@ const SignIn = () => {
                   label={
                     newUser ? (
                       <>
-                        I Agree{" "}
-                        <bold style={{ fontWeight: "700", cursor: "pointer" }}>
-                          Terms &amp; Conditions
-                        </bold>
+                        I Agree <bold style={{ fontWeight: "700", cursor: "pointer" }}>Terms &amp; Conditions</bold>
                       </>
                     ) : (
                       `Remember Me`
@@ -278,28 +205,16 @@ const SignIn = () => {
                 />
               </Typography>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              style={{ textAlign: "center", marginTop: "0.8rem" }}
-            >
+            <Grid item xs={12} style={{ textAlign: "center", marginTop: "0.8rem" }}>
               <Link to="/dashboard">
                 {" "}
-                <Button
-                  variant="contained"
-                  style={{ textAlign: "center" }}
-                  className={clsx(classes.signInButtons, classes.loginButton)}
-                >
+                <Button variant="contained" style={{ textAlign: "center" }} className={clsx(classes.signInButtons, classes.loginButton)}>
                   {newUser ? " Sign Up" : "Login"}
                 </Button>
               </Link>
             </Grid>
             <Grid xs={12} style={{ marginTop: "0.7rem" }}>
-              <Typography
-                variant="caption"
-                color="initial"
-                style={{ letterSpacing: "0.6px" }}
-              >
+              <Typography variant="caption" color="initial" style={{ letterSpacing: "0.6px" }}>
                 {newUser ? "Aready Registered ?" : "Not registered yet ?"}
                 &nbsp;&nbsp;
                 <Typography
@@ -307,7 +222,7 @@ const SignIn = () => {
                   style={{ fontWeight: "700", cursor: "pointer" }}
                   color="initial"
                   onClick={() => {
-                    setNewUser(!newUser);
+                    setNewUser(!newUser)
                   }}
                 >
                   {newUser ? "Sign In" : "Create an Account"}
@@ -347,7 +262,7 @@ const SignIn = () => {
         )}
       </Grid>
     </Box>
-  );
-};
+  )
+}
 
-export default SignIn;
+export default SignIn
