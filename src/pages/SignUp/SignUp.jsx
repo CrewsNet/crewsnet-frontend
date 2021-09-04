@@ -24,6 +24,8 @@ import FormControl from "@material-ui/core/FormControl"
 import Visibility from "@material-ui/icons/Visibility"
 import VisibilityOff from "@material-ui/icons/VisibilityOff"
 import useSignUp from "../../data-access/useSignUp/useSignUp"
+import GoogleLogin from "react-google-login"
+import useGoogleAuth from "../../data-access/useGoogleAuth/useGoogleAuth"
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation])
@@ -96,12 +98,12 @@ const SignUp = ({ history }) => {
   const matches375 = useMediaQuery("(max-width:375px)")
   const matches1280 = useMediaQuery("(max-width:1280px)")
   const [showPassword, setShowPassword] = useState(false)
-  const [newUser, setNewUser] = useState(false)
   const [name, setName] = useState()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
 
   const { isLoading, message, setMessage, onSignUp } = useSignUp()
+  const { responseErrorGoogle, responseSuccessGoogle } = useGoogleAuth()
 
   const handleSignUp = async () => {
     await onSignUp({ email, password, name })
@@ -149,9 +151,7 @@ const SignUp = ({ history }) => {
             {/* <TextField id="outlined-basic" label="Email" variant="outlined" /> */}
             <Grid xs={12} container justifyContent="space-between" style={{ marginTop: "1rem" }}>
               <Grid item xs={6}>
-                <Button variant="contained" startIcon={<GoogleSVG size="1.7rem" />} className={classes.signInButtons}>
-                  {!matches375 ? "with Google" : "Sign In"}
-                </Button>
+                <GoogleLogin clientId="915209891946-f0hlo4lerlgj7oumkv86r7v2693ntq60.apps.googleusercontent.com" buttonText={!matches375 ? "with Google" : "Sign In"} onSuccess={responseSuccessGoogle} onFailure={responseErrorGoogle} cookiePolicy={`single_host_origin`} />
               </Grid>
               <Grid item xs={6} style={{ textAlign: "end" }}>
                 <Button variant="contained" style={{ textAlign: "start" }} startIcon={<GithubSVG size="1.7rem" color="#161614" />} className={clsx(classes.signInButtons, "github-button")}>

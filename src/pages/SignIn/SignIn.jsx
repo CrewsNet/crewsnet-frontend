@@ -26,6 +26,8 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff"
 import useGoogleAuth from "../../data-access/useGoogleAuth/useGoogleAuth"
 import useLogin from "../../data-access/useLogin/useLogin"
 import GoogleLogin from "react-google-login"
+import useGithubAuth from "../../data-access/useGithubAuth/useGithubAuth"
+import GitHubLogin from "react-github-login"
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation])
@@ -103,6 +105,7 @@ const SignIn = ({ history }) => {
 
   const { isLoading, message, setMessage, onLogin } = useLogin()
   const { responseErrorGoogle, responseSuccessGoogle } = useGoogleAuth()
+  const { responseErrorGithub, responseSuccessGithub } = useGithubAuth()
 
   const handleLogin = async () => {
     await onLogin({ email, password })
@@ -150,14 +153,12 @@ const SignIn = ({ history }) => {
             {/* <TextField id="outlined-basic" label="Email" variant="outlined" /> */}
             <Grid xs={12} container justifyContent="space-between" style={{ marginTop: "1rem" }}>
               <Grid item xs={6}>
-                {/* <Button variant="contained" startIcon={<GoogleSVG size="1.7rem" />} className={classes.signInButtons}>
-                  {!matches375 ? "with Google" : "Sign In"}
-                </Button> */}
                 <GoogleLogin clientId="915209891946-f0hlo4lerlgj7oumkv86r7v2693ntq60.apps.googleusercontent.com" buttonText={!matches375 ? "with Google" : "Sign In"} onSuccess={responseSuccessGoogle} onFailure={responseErrorGoogle} cookiePolicy={`single_host_origin`} />
               </Grid>
               <Grid item xs={6} style={{ textAlign: "end" }}>
                 <Button variant="contained" style={{ textAlign: "start" }} startIcon={<GithubSVG size="1.7rem" color="#161614" />} className={clsx(classes.signInButtons, "github-button")}>
                   {!matches375 ? "with Github" : "Sign in"}
+                  <GitHubLogin className="github-login" clientId="0212cf0bbc96000a6ba6" client_secret="4b9954d1927f78cf06e16bf471bb5d836b6d1c7d" redirect_uri="/dashboard" onSuccess={responseSuccessGithub} onFailure={responseErrorGithub} buttonText="" />
                 </Button>
               </Grid>
             </Grid>

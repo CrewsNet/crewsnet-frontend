@@ -1,7 +1,6 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "./Dashboard.scss"
 import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom"
-
 import DrawerLeft from "./components/DrawerLeft/DrawerLeft"
 import DrawerRight from "./components/DrawerRight/DrawerRight"
 import Feed from "./components/Feed/Feed"
@@ -13,6 +12,8 @@ import Messages from "./components/Messages/Messages"
 import PageNotFound from "../PageNotFound/PageNotFound"
 import Header from "./components/Header/Header"
 import { makeStyles } from "@material-ui/core/styles"
+import { ACCESS_TOKEN } from "../../constants/constants"
+import Axios from "axios"
 
 const useStyles = makeStyles({
   container: {
@@ -25,6 +26,17 @@ const Dashboard = (props) => {
 
   const path = "/(|projects|profile|contest|savedcontest|messages)/"
   const [showDrawerLeft, setShowDrawerLeft] = useState(false)
+
+  useEffect(async () => {
+    const token = localStorage.getItem(ACCESS_TOKEN)
+    console.log("dashboard", token)
+    const response = await Axios({
+      method: "get",
+      url: `${process.env.REACT_APP_NODE_BACKEND_URL}/users/dash`,
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    console.log(response)
+  }, [])
 
   return (
     <div className={classes.container}>

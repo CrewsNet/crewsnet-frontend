@@ -7,6 +7,15 @@
         color: white;
       }
     }
+    .github-login {
+      border: 1px solid red;
+      position: absolute;
+      width: 200px;
+      height: 60px;
+      opacity: 0;
+      cursor: pointer;
+    }
+    overflow: hidden;
   }
   .formLogin {
     .MuiFormLabel-root.Mui-focused {
