@@ -1,0 +1,16 @@
+@import "../../styles//variables.scss";
+
+.login-page {
+  .github-button {
+    &:hover {
+      svg {
+        color: white;
+      }
+    }
+  }
+  .formLogin {
+    .MuiFormLabel-root.Mui-focused {
+      color: white;
+    }
+  }
+}

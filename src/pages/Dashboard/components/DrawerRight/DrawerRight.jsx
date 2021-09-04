@@ -1,27 +1,16 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  Drawer,
-  CssBaseline,
-  List,
-  Typography,
-  Divider,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  Hidden,
-} from "@material-ui/core";
+import React, { useContext } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import { Drawer, CssBaseline, List, Typography, Divider, ListItem, ListItemText, ListItemAvatar, Avatar, Hidden } from "@material-ui/core"
 
-import { Colors } from "../../../../styles/Colors";
-import { withRouter } from "react-router-dom";
-import { Notification as NotificationSVG } from "../../../../assets/Icons/Icons";
-import { Logout as LogoutSVG } from "../../../../assets/Icons/Icons";
-import { ChatMessage as ChatMessageSVG } from "../../../../assets/Icons/Icons";
+import { Colors } from "../../../../styles/Colors"
+import { withRouter } from "react-router-dom"
+import { Notification as NotificationSVG } from "../../../../assets/Icons/Icons"
+import { Logout as LogoutSVG } from "../../../../assets/Icons/Icons"
+import { ChatMessage as ChatMessageSVG } from "../../../../assets/Icons/Icons"
+import { AuthContext } from "../../../../context/AuthContext"
+import { customHistory } from "../../../../App"
 
-import { customHistory } from "../../../../App";
-
-const drawerWidth = 300;
+const drawerWidth = 300
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -36,42 +25,42 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1, 2),
   },
-}));
+}))
 
 const chat = [
   {
-    avatarUrl:
-      "https://i.pinimg.com/236x/7d/1a/3f/7d1a3f77eee9f34782c6f88e97a6c888--no-face-facebook-profile.jpg",
+    avatarUrl: "https://i.pinimg.com/236x/7d/1a/3f/7d1a3f77eee9f34782c6f88e97a6c888--no-face-facebook-profile.jpg",
     name: "Ujjwal Garg",
     email: "Lorem",
     unreadMessage: true,
   },
   {
-    avatarUrl:
-      "https://i.pinimg.com/236x/7d/1a/3f/7d1a3f77eee9f34782c6f88e97a6c888--no-face-facebook-profile.jpg",
+    avatarUrl: "https://i.pinimg.com/236x/7d/1a/3f/7d1a3f77eee9f34782c6f88e97a6c888--no-face-facebook-profile.jpg",
     name: "Ujjwal Garg",
     email: "Lorem",
     unreadMessage: true,
   },
   {
-    avatarUrl:
-      "https://i.pinimg.com/236x/7d/1a/3f/7d1a3f77eee9f34782c6f88e97a6c888--no-face-facebook-profile.jpg",
+    avatarUrl: "https://i.pinimg.com/236x/7d/1a/3f/7d1a3f77eee9f34782c6f88e97a6c888--no-face-facebook-profile.jpg",
     name: "Ujjwal Garg",
     email: "Lorem",
     unreadMessage: false,
   },
   {
-    avatarUrl:
-      "https://i.pinimg.com/236x/7d/1a/3f/7d1a3f77eee9f34782c6f88e97a6c888--no-face-facebook-profile.jpg",
+    avatarUrl: "https://i.pinimg.com/236x/7d/1a/3f/7d1a3f77eee9f34782c6f88e97a6c888--no-face-facebook-profile.jpg",
     name: "Ujjwal Garg",
     email: "Lorem",
     unreadMessage: true,
   },
-];
+]
 
 const DrawerRight = (props) => {
-  const classes = useStyles();
+  const classes = useStyles()
+  const { logout } = useContext(AuthContext)
 
+  const handleLogout = () => {
+    logout()
+  }
   return (
     <div>
       <CssBaseline />
@@ -84,20 +73,11 @@ const DrawerRight = (props) => {
           }}
           anchor="right"
         >
-          <div
-            className={classes.toolbar}
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <Avatar
-              alt=""
-              src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-              className={classes.avatar}
-            />
+          <div className={classes.toolbar} style={{ display: "flex", alignItems: "center" }}>
+            <Avatar alt="" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className={classes.avatar} />
             <div>
               <p style={{ margin: "0", fontSize: "14px" }}>Ujjwal Garg</p>
-              <p style={{ margin: "0", color: "grey", fontSize: "10px" }}>
-                ujjwalgarg.252@gmail.com
-              </p>
+              <p style={{ margin: "0", color: "grey", fontSize: "10px" }}>ujjwalgarg.252@gmail.com</p>
             </div>
             <div
               style={{
@@ -111,7 +91,7 @@ const DrawerRight = (props) => {
                 size="1.1rem"
                 cursor="pointer"
                 onClick={() => {
-                  customHistory.push("/signin");
+                  handleLogout()
                 }}
               />
             </div>
@@ -141,15 +121,11 @@ const DrawerRight = (props) => {
             </div>
             <List style={{ padding: 0 }}>
               {chat.map((user, index) => {
-                const { avatarUrl, name, email, unreadMessage } = user;
+                const { avatarUrl, name, email, unreadMessage } = user
 
                 return (
                   <div key={index}>
-                    <ListItem
-                      button
-                      alignItems="flex-start"
-                      style={{ padding: "20px" }}
-                    >
+                    <ListItem button alignItems="flex-start" style={{ padding: "20px" }}>
                       <ListItemAvatar>
                         <Avatar alt={name} src={avatarUrl} />
                       </ListItemAvatar>
@@ -157,18 +133,12 @@ const DrawerRight = (props) => {
                       <ListItemText
                         primary={
                           <React.Fragment>
-                            <Typography style={{ fontSize: "14px" }}>
-                              {name}
-                            </Typography>
+                            <Typography style={{ fontSize: "14px" }}>{name}</Typography>
                           </React.Fragment>
                         }
                         secondary={
                           <React.Fragment>
-                            <Typography
-                              style={{ fontSize: "10px", color: "#9F9F9F" }}
-                            >
-                              {email}
-                            </Typography>
+                            <Typography style={{ fontSize: "10px", color: "#9F9F9F" }}>{email}</Typography>
                           </React.Fragment>
                         }
                       />
@@ -191,14 +161,14 @@ const DrawerRight = (props) => {
                     </ListItem>
                     <Divider variant="middle" component="li" />
                   </div>
-                );
+                )
               })}
             </List>
           </div>
         </Drawer>
       </Hidden>
     </div>
-  );
-};
+  )
+}
 
-export default withRouter(DrawerRight);
+export default withRouter(DrawerRight)
