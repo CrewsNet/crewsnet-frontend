@@ -13,7 +13,7 @@ const useGoogleAuth = () => {
       }).then((response) => {
         localStorage.setItem(ACCESS_TOKEN, response.data.token)
         console.log(response)
-        // window.location.href = "/dashboard"
+        window.location.href = "/dashboard"
       })
     } catch (e) {
       console.log(e)
