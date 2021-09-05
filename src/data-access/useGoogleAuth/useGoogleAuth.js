@@ -1,31 +1,30 @@
+import axios from "axios"
 import { useState } from "react"
+import { ACCESS_TOKEN } from "../../constants/constants"
 
 const useGoogleAuth = () => {
-  const [isLoading, setIsLoading] = useState(false)
-
-  const [message, setMessage] = useState(false)
-
-  const onGoogleAuthSubmit = async () => {
-    setIsLoading(true)
-    setMessage(" ")
+  const responseSuccessGoogle = async (response) => {
+    console.log(response.tokenId)
     try {
-      const response = await fetch(`${process.env.REACT_APP_NODE_BACKEND_URL}/auth/google`, {
-        method: "get",
+      await axios({
+        method: "POST",
+        url: `${process.env.REACT_APP_NODE_BACKEND_URL}/users/auth/google`,
+        data: { tokenId: response.tokenId },
+      }).then((response) => {
+        localStorage.setItem(ACCESS_TOKEN, response.data.token)
+        console.log(response)
+        window.location.href = "/dashboard"
       })
-
-      console.log("response", response.status)
-      setIsLoading(false)
-
-      if (response.status === 200) {
-        console.log("success")
-        window.location.href = response.url
-        setMessage("Logged In")
-      }
-    } catch (err) {
-      setMessage(err.message)
+    } catch (e) {
+      console.log(e)
     }
+
+    // window.location.href = "/dashboard"
   }
-  return { isLoading, message, setMessage, onGoogleAuthSubmit }
+  const responseErrorGoogle = (response) => {
+    console.log(response)
+  }
+  return { responseSuccessGoogle, responseErrorGoogle }
 }
 
 export default useGoogleAuth

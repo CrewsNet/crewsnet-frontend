@@ -21,7 +21,6 @@ const Contest = () => {
   const classes = useStyles()
   const { isLoading, contests, getContest } = useContest()
 
-  // const [isLoading, setIsLoading] = useState(true)
   const [state, setState] = useImmer({
     contestSaved: false,
     key: [],
@@ -40,26 +39,6 @@ const Contest = () => {
       console.log(error)
     }
   }
-
-  // useEffect(() => {
-  //   const ourRequest = Axios.CancelToken.source()
-  //   async function fetchContest() {
-  //     try {
-  //       const response = await Axios.get("https://kontests.net/api/v1/all", {
-  //         cancelToken: ourRequest.token,
-  //       })
-  //       setContest(response.data)
-  //       console.log(response.data)
-  //       setIsLoading(false)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   fetchContest()
-  //   return () => {
-  //     ourRequest.cancel()
-  //   }
-  // }, [])
 
   if (isLoading) {
     return (

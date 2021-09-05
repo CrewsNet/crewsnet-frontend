@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import clsx from "clsx"
-import { Box, Grid, TextField, Button, Typography, Checkbox, FormControlLabel, IconButton, CircularProgress } from "@material-ui/core"
+import { Box, Grid, TextField, Button, Typography, Checkbox, FormControlLabel, IconButton } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import { Colors } from "../../styles/Colors"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper-bundle.min.css"
-import "./SignIn.scss"
+import "./SignUp.scss"
 // swiper core styles
 import "swiper/swiper.min.css"
 // modules styles
@@ -23,9 +23,7 @@ import InputAdornment from "@material-ui/core/InputAdornment"
 import FormControl from "@material-ui/core/FormControl"
 import Visibility from "@material-ui/icons/Visibility"
 import VisibilityOff from "@material-ui/icons/VisibilityOff"
-import useGoogleAuth from "../../data-access/useGoogleAuth/useGoogleAuth"
-import useLogin from "../../data-access/useLogin/useLogin"
-import GoogleLogin from "react-google-login"
+import useSignUp from "../../data-access/useSignUp/useSignUp"
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation])
@@ -93,19 +91,20 @@ const useStyles = makeStyles({
   },
 })
 
-const SignIn = ({ history }) => {
+const SignUp = ({ history }) => {
   const matches960 = useMediaQuery("(max-width:960px)")
   const matches375 = useMediaQuery("(max-width:375px)")
   const matches1280 = useMediaQuery("(max-width:1280px)")
   const [showPassword, setShowPassword] = useState(false)
+  const [newUser, setNewUser] = useState(false)
+  const [name, setName] = useState()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
 
-  const { isLoading, message, setMessage, onLogin } = useLogin()
-  const { responseErrorGoogle, responseSuccessGoogle } = useGoogleAuth()
+  const { isLoading, message, setMessage, onSignUp } = useSignUp()
 
-  const handleLogin = async () => {
-    await onLogin({ email, password })
+  const handleSignUp = async () => {
+    await onSignUp({ email, password, name })
   }
 
   const classes = useStyles()
@@ -142,7 +141,7 @@ const SignIn = ({ history }) => {
                 letterSpacing: "0.7px",
               }}
             >
-              Login
+              Sign Up
             </Typography>
             <Typography variant="caption" color="initial">
               Get connected with the world of Projects!
@@ -150,10 +149,9 @@ const SignIn = ({ history }) => {
             {/* <TextField id="outlined-basic" label="Email" variant="outlined" /> */}
             <Grid xs={12} container justifyContent="space-between" style={{ marginTop: "1rem" }}>
               <Grid item xs={6}>
-                {/* <Button variant="contained" startIcon={<GoogleSVG size="1.7rem" />} className={classes.signInButtons}>
+                <Button variant="contained" startIcon={<GoogleSVG size="1.7rem" />} className={classes.signInButtons}>
                   {!matches375 ? "with Google" : "Sign In"}
-                </Button> */}
-                <GoogleLogin clientId="915209891946-f0hlo4lerlgj7oumkv86r7v2693ntq60.apps.googleusercontent.com" buttonText={!matches375 ? "with Google" : "Sign In"} onSuccess={responseSuccessGoogle} onFailure={responseErrorGoogle} cookiePolicy={`single_host_origin`} />
+                </Button>
               </Grid>
               <Grid item xs={6} style={{ textAlign: "end" }}>
                 <Button variant="contained" style={{ textAlign: "start" }} startIcon={<GithubSVG size="1.7rem" color="#161614" />} className={clsx(classes.signInButtons, "github-button")}>
@@ -174,6 +172,17 @@ const SignIn = ({ history }) => {
               </Typography>
             </Grid>
             <Grid className="formLogin">
+              <TextField
+                type="text"
+                onChange={(e) => {
+                  setName(e.target.value)
+                }}
+                className={classes.inputFields}
+                id="outlined-basic"
+                label="Name"
+                variant="outlined"
+              />
+
               <TextField
                 type="email"
                 onChange={(e) => {
@@ -205,7 +214,14 @@ const SignIn = ({ history }) => {
             </Grid>
             <Grid xs={12}>
               <Typography variant="small" color="initial">
-                <FormControlLabel control={<Checkbox name="rememberMe" />} label={"Remember Me"} />
+                <FormControlLabel
+                  control={<Checkbox name="rememberMe" />}
+                  label={
+                    <>
+                      I Agree <bold style={{ fontWeight: "700", cursor: "pointer" }}>Terms &amp; Conditions</bold>
+                    </>
+                  }
+                />
               </Typography>
             </Grid>
             <Grid item xs={12} style={{ textAlign: "center", marginTop: "0.8rem" }}>
@@ -213,25 +229,25 @@ const SignIn = ({ history }) => {
                 variant="contained"
                 style={{ textAlign: "center" }}
                 onClick={() => {
-                  handleLogin()
+                  handleSignUp()
                 }}
                 className={clsx(classes.signInButtons, classes.loginButton)}
               >
-                {isLoading ? <CircularProgress color="secondary" style={{ width: "35px", height: "auto" }} /> : "Login"}
+                Sign Up
               </Button>
             </Grid>
             <Grid xs={12} style={{ marginTop: "0.7rem" }}>
               <Typography variant="caption" color="initial" style={{ letterSpacing: "0.6px" }}>
-                Not registered yet ? &nbsp;&nbsp;
+                Aready Registered ? &nbsp;&nbsp;
                 <Typography
                   variant="caption"
                   style={{ fontWeight: "700", cursor: "pointer" }}
                   color="initial"
                   onClick={() => {
-                    history.push("/signup")
+                    history.push("/signin")
                   }}
                 >
-                  Create an Account
+                  Sign In
                 </Typography>
               </Typography>
             </Grid>
@@ -271,4 +287,4 @@ const SignIn = ({ history }) => {
   )
 }
 
-export default SignIn
+export default SignUp
