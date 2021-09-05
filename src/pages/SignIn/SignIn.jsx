@@ -26,15 +26,10 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff"
 import useGoogleAuth from "../../data-access/useGoogleAuth/useGoogleAuth"
 import useLogin from "../../data-access/useLogin/useLogin"
 import GoogleLogin from "react-google-login"
-import useGithubAuth from "../../data-access/useGithubAuth/useGithubAuth"
-import GitHubLogin from "react-github-login"
-import axios from "axios"
+import { PATH, GITHUB_CLIENT_ID, GITHUB_REDIRECT_URL } from "../../constants/constants"
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation])
-const GITHUB_CLIENT_ID = "0212cf0bbc96000a6ba6"
-const GITHUB_REDIRECT_URL = "http://localhost:8000/users/auth/github"
-const PATH = "/"
 
 const useStyles = makeStyles({
   signInContainer: {
