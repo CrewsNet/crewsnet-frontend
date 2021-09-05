@@ -1,16 +1,16 @@
 import React, { useContext } from "react"
 import { Route } from "react-router"
 import { AuthContext } from "../../context/AuthContext"
-import { ACCESS_TOKEN } from "../../constants/constants"
+import { COOKIE_NAME } from "../../constants/constants"
+import Cookies from "universal-cookie"
 
 export default function PrivateRoute({ component: RouteComponent, ...rest }) {
+  const cookies = new Cookies()
   const { user, isAuthenticated } = useContext(AuthContext)
-
-  const access_token = localStorage.getItem(ACCESS_TOKEN)
-
+  const cookie = cookies.get(COOKIE_NAME)
   return (
     <>
-      <Route {...rest} render={(routeProps) => (access_token === undefined || access_token === "" || access_token === null || !isAuthenticated ? <>{(window.location.href = "/signin")}</> : <RouteComponent {...routeProps} user={user} />)} />
+      <Route {...rest} render={(routeProps) => (cookie === undefined || cookie === "" || cookie === null || !isAuthenticated ? (window.location.href = "/signin") : <RouteComponent {...routeProps} user={user} />)} />
     </>
   )
 }

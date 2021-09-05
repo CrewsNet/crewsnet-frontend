@@ -1,22 +1,27 @@
 import axios from "axios"
 import { useState } from "react"
-import { ACCESS_TOKEN } from "../../constants/constants"
+import { COOKIE_NAME } from "../../constants/constants"
+import Cookies from "universal-cookie"
 
 const useGoogleAuth = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const cookies = new Cookies()
   const responseSuccessGoogle = async (response) => {
-    console.log(response.tokenId)
+    setIsLoading(true)
     try {
       await axios({
         method: "POST",
         url: `${process.env.REACT_APP_NODE_BACKEND_URL}/users/auth/google`,
         data: { tokenId: response.tokenId },
       }).then((response) => {
-        localStorage.setItem(ACCESS_TOKEN, response.data.token)
+        cookies.set(COOKIE_NAME, response.data.token)
         console.log(response)
+        setIsLoading(false)
         window.location.href = "/dashboard"
       })
     } catch (e) {
       console.log(e)
+      setIsLoading(false)
     }
 
     // window.location.href = "/dashboard"
@@ -24,7 +29,7 @@ const useGoogleAuth = () => {
   const responseErrorGoogle = (response) => {
     console.log(response)
   }
-  return { responseSuccessGoogle, responseErrorGoogle }
+  return { responseSuccessGoogle, responseErrorGoogle, isLoading, setIsLoading }
 }
 
 export default useGoogleAuth

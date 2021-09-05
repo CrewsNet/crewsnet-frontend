@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Contest = () => {
   const classes = useStyles()
-  const { isLoading, contests, getContest } = useContest()
+  const { isLoading, isUpdating, contests, getContest, saveContest, unSaveContest } = useContest()
 
   const [state, setState] = useImmer({
     contestSaved: false,
@@ -28,16 +28,7 @@ const Contest = () => {
   useEffect(() => getContest(), [])
 
   const handleContestSaving = async (contests, key) => {
-    try {
-      // const response = await Axios.post("", { contests });
-      console.log(key, contests)
-      setState((draft) => {
-        draft.contestSaved = true
-        draft.key.push(key)
-      })
-    } catch (error) {
-      console.log(error)
-    }
+    await saveContest(contests)
   }
 
   if (isLoading) {

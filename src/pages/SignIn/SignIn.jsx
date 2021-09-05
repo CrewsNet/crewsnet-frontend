@@ -28,9 +28,13 @@ import useLogin from "../../data-access/useLogin/useLogin"
 import GoogleLogin from "react-google-login"
 import useGithubAuth from "../../data-access/useGithubAuth/useGithubAuth"
 import GitHubLogin from "react-github-login"
+import axios from "axios"
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation])
+const GITHUB_CLIENT_ID = "0212cf0bbc96000a6ba6"
+const GITHUB_REDIRECT_URL = "http://localhost:8000/users/auth/github"
+const PATH = "/"
 
 const useStyles = makeStyles({
   signInContainer: {
@@ -105,13 +109,17 @@ const SignIn = ({ history }) => {
 
   const { isLoading, message, setMessage, onLogin } = useLogin()
   const { responseErrorGoogle, responseSuccessGoogle } = useGoogleAuth()
-  const { responseErrorGithub, responseSuccessGithub } = useGithubAuth()
 
   const handleLogin = async () => {
     await onLogin({ email, password })
   }
+  // const handleGithubLogin = async () => {
+  //   const response = await axios.get(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`)
+  //   console.log(response)
+  // }
 
   const classes = useStyles()
+  console.log(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`)
   return (
     <Box className={clsx(classes.signInContainer, "login-page")} display="flex" alignItems="center" justifyContent="center">
       <Grid
@@ -153,13 +161,25 @@ const SignIn = ({ history }) => {
             {/* <TextField id="outlined-basic" label="Email" variant="outlined" /> */}
             <Grid xs={12} container justifyContent="space-between" style={{ marginTop: "1rem" }}>
               <Grid item xs={6}>
-                <GoogleLogin clientId="915209891946-f0hlo4lerlgj7oumkv86r7v2693ntq60.apps.googleusercontent.com" buttonText={!matches375 ? "with Google" : "Sign In"} onSuccess={responseSuccessGoogle} onFailure={responseErrorGoogle} cookiePolicy={`single_host_origin`} />
+                <Button variant="contained" startIcon={<GoogleSVG size="1.7rem" />} className={clsx(classes.signInButtons, "google-button")}>
+                  {!matches375 ? "with Google" : "Sign In"}
+                  <GoogleLogin disabled={false} className="google-login" clientId="915209891946-f0hlo4lerlgj7oumkv86r7v2693ntq60.apps.googleusercontent.com" buttonText={!matches375 ? "with Google" : "Sign In"} onSuccess={responseSuccessGoogle} onFailure={responseErrorGoogle} cookiePolicy={`single_host_origin`} />
+                </Button>
               </Grid>
               <Grid item xs={6} style={{ textAlign: "end" }}>
-                <Button variant="contained" style={{ textAlign: "start" }} startIcon={<GithubSVG size="1.7rem" color="#161614" />} className={clsx(classes.signInButtons, "github-button")}>
-                  {!matches375 ? "with Github" : "Sign in"}
-                  <GitHubLogin className="github-login" clientId="0212cf0bbc96000a6ba6" client_secret="4b9954d1927f78cf06e16bf471bb5d836b6d1c7d" redirect_uri="/dashboard" onSuccess={responseSuccessGithub} onFailure={responseErrorGithub} buttonText="" />
-                </Button>
+                <a href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`}>
+                  <Button
+                    variant="contained"
+                    // onClick={() => {
+                    //   handleGithubLogin()
+                    // }}
+                    style={{ textAlign: "start" }}
+                    startIcon={<GithubSVG size="1.7rem" color="#161614" />}
+                    className={clsx(classes.signInButtons, "github-button")}
+                  >
+                    {!matches375 ? "with Github" : "Sign in"}
+                  </Button>
+                </a>
               </Grid>
             </Grid>
             <Grid

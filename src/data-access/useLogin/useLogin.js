@@ -1,8 +1,10 @@
 import { useState } from "react"
 import Axios from "axios"
-import { ACCESS_TOKEN } from "../../constants/constants"
+import { COOKIE_NAME } from "../../constants/constants"
+import Cookies from "universal-cookie"
 
 const useLogin = () => {
+  const cookies = new Cookies()
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState(false)
 
@@ -14,7 +16,7 @@ const useLogin = () => {
       const response = await Axios.post(`${process.env.REACT_APP_NODE_BACKEND_URL}/users/login`, { email, password })
       console.log(response.data.token)
       if (response.status === 200) {
-        localStorage.setItem(ACCESS_TOKEN, response.data.token)
+        cookies.set(COOKIE_NAME, response.data.token)
         setMessage("Successful")
         window.location.href = "/dashboard"
       } else {

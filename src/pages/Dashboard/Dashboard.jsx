@@ -27,16 +27,16 @@ const Dashboard = (props) => {
   const path = "/(|projects|profile|contest|savedcontest|messages)/"
   const [showDrawerLeft, setShowDrawerLeft] = useState(false)
 
-  useEffect(async () => {
-    const token = localStorage.getItem(ACCESS_TOKEN)
-    console.log("dashboard", token)
-    const response = await Axios({
-      method: "get",
-      url: `${process.env.REACT_APP_NODE_BACKEND_URL}/users/dash`,
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    console.log(response)
-  }, [])
+  // useEffect(async () => {
+  //   const token = localStorage.getItem(ACCESS_TOKEN)
+  //   console.log("dashboard", token)
+  //   const response = await Axios({
+  //     method: "get",
+  //     url: `${process.env.REACT_APP_NODE_BACKEND_URL}/users/dash`,
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   })
+  //   console.log(response)
+  // }, [])
 
   return (
     <div className={classes.container}>

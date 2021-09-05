@@ -13,6 +13,7 @@
     "http-proxy-middleware": "^2.0.1",
     "moment": "^2.29.1",
     "react": "^17.0.2",
+    "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
     "react-github-login": "^1.0.3",
     "react-google-login": "^5.2.2",
@@ -20,6 +21,7 @@
     "react-scripts": "^4.0.3",
     "sass": "^1.37.5",
     "swiper": "^6.8.4",
+    "universal-cookie": "^4.0.4",
     "use-immer": "^0.6.0",
     "web-vitals": "^1.0.1"
   },
