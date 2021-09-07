@@ -27,7 +27,6 @@ import useGoogleAuth from "../../data-access/useGoogleAuth/useGoogleAuth"
 import useLogin from "../../data-access/useLogin/useLogin"
 import GoogleLogin from "react-google-login"
 import { PATH, GITHUB_CLIENT_ID, GITHUB_REDIRECT_URL } from "../../constants/constants"
-import axios from "axios"
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation])
@@ -109,19 +108,10 @@ const SignIn = ({ history }) => {
   const handleLogin = async () => {
     await onLogin({ email, password })
   }
-  const handleGithubLogin = async () => {
-    const response = await axios.get(
-      `https://github.com/login/oauth/authorize/`,
-      {
-        client_id: GITHUB_CLIENT_ID,
-        redirect_uri: GITHUB_REDIRECT_URL,
-        path: PATH,
-        scope: "user:email",
-      },
-      { headers: { "X-Requested-With": "XMLHttpRequest" } }
-    )
-    console.log(response)
-  }
+  // const handleGithubLogin = async () => {
+  //   const response = await axios.get(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`)
+  //   console.log(response)
+  // }
 
   const classes = useStyles()
   console.log(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`)
@@ -172,19 +162,19 @@ const SignIn = ({ history }) => {
                 </Button>
               </Grid>
               <Grid item xs={6} style={{ textAlign: "end" }}>
-                {/* <a href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`}> */}
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    handleGithubLogin()
-                  }}
-                  style={{ textAlign: "start" }}
-                  startIcon={<GithubSVG size="1.7rem" color="#161614" />}
-                  className={clsx(classes.signInButtons, "github-button")}
-                >
-                  {!matches375 ? "with Github" : "Sign in"}
-                </Button>
-                {/* </a> */}
+                <a href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`}>
+                  <Button
+                    variant="contained"
+                    // onClick={() => {
+                    //   handleGithubLogin()
+                    // }}
+                    style={{ textAlign: "start" }}
+                    startIcon={<GithubSVG size="1.7rem" color="#161614" />}
+                    className={clsx(classes.signInButtons, "github-button")}
+                  >
+                    {!matches375 ? "with Github" : "Sign in"}
+                  </Button>
+                </a>
               </Grid>
             </Grid>
             <Grid
