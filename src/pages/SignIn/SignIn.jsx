@@ -114,7 +114,6 @@ const SignIn = ({ history }) => {
   // }
 
   const classes = useStyles()
-  console.log(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`)
   return (
     <Box className={clsx(classes.signInContainer, "login-page")} display="flex" alignItems="center" justifyContent="center">
       <Grid
