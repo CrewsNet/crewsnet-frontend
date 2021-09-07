@@ -1,13 +1,16 @@
-import React from "react";
-import { Router, Switch, Route } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import LandingPage from "./pages/LandingPage/LandingPage";
-import SignIn from "./pages/SignIn/SignIn";
-import PageNotFound from "./pages/PageNotFound/PageNotFound";
-import { createBrowserHistory } from "history";
+import React from "react"
+import { BrowserRouter, Switch, Route } from "react-router-dom"
+import { createTheme, ThemeProvider } from "@material-ui/core/styles"
+import Dashboard from "./pages/Dashboard/Dashboard"
+import LandingPage from "./pages/LandingPage/LandingPage"
+import SignIn from "./pages/SignIn/SignIn"
+import PageNotFound from "./pages/PageNotFound/PageNotFound"
+import { createBrowserHistory } from "history"
+import SignUp from "./pages/SignUp/SignUp"
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute"
+import AuthProvider from "./context/AuthContext"
 
-export const customHistory = createBrowserHistory(); //This maintains custom history
+export const customHistory = createBrowserHistory() //This maintains custom history
 
 const theme = createTheme({
   palette: {
@@ -16,21 +19,24 @@ const theme = createTheme({
       main: "#181818",
     },
   },
-});
+})
 
 const App = () => {
   return (
-    <Router history={customHistory}>
+    <BrowserRouter history={customHistory}>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route path="/" exact component={LandingPage} ></Route>
+          <Route path="/" exact component={LandingPage}></Route>
           <Route path="/signin" exact component={SignIn}></Route>
-          <Route path="/dashboard" component={Dashboard}></Route>
+          <Route path="/signup" exact component={SignUp}></Route>
+          <AuthProvider>
+            <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
+          </AuthProvider>
           <Route component={PageNotFound}></Route>
         </Switch>
       </ThemeProvider>
-    </Router>
-  );
-};
+    </BrowserRouter>
+  )
+}
 
-export default App;
+export default App

@@ -1,28 +1,18 @@
-import React from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { withRouter } from "react-router-dom"
-import AppBar from "@material-ui/core/AppBar"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import Divider from "@material-ui/core/Divider"
-import Drawer from "@material-ui/core/Drawer"
-import Hidden from "@material-ui/core/Hidden"
-import IconButton from "@material-ui/core/IconButton"
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemIcon from "@material-ui/core/ListItemIcon"
-import ListItemText from "@material-ui/core/ListItemText"
-import MenuIcon from "@material-ui/icons/Menu"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
+
+import { List, ListItem, ListItemIcon, ListItemText, Typography, Hidden, Divider, CssBaseline, Drawer } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import InputBase from "@material-ui/core/InputBase"
-import SearchIcon from "@material-ui/icons/Search"
-import moment from "moment"
+
 import { Feed as FeedSVG } from "../../../../assets/Icons/Icons"
 import { Contest as ContestSVG } from "../../../../assets/Icons/Icons"
 import { Profile as ProfileSVG } from "../../../../assets/Icons/Icons"
 import { Project as ProjectSVG } from "../../../../assets/Icons/Icons"
 import { SavedContest as SavedContestSVG } from "../../../../assets/Icons/Icons"
 import { Message as MessageSVG } from "../../../../assets/Icons/Icons"
+import { Logout as LogoutSVG } from "../../../../assets/Icons/Icons"
+import { Colors } from "../../../../styles/Colors"
+import { AuthContext } from "../../../../context/AuthContext"
 
 const drawerWidth = 280
 
@@ -33,74 +23,33 @@ const useStyles = makeStyles((theme) => ({
       flexShrink: 0,
     },
   },
-  appBar: {
-    [theme.breakpoints.between("sm", "md")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
-    [theme.breakpoints.up("md")]: {
-      width: `calc(100% - 2*${drawerWidth}px)`,
-      marginRight: drawerWidth,
-      marginTop: "16px",
-    },
-    marginTop: "10px",
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up("sm")]: {
-      display: "none",
-    },
-  },
-  // // necessary for content to be below app bar
+
   toolbar: {
     minHeight: "100px",
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: "#1f1f1f",
-  },
-
-  search: {
-    flexGrow: 1,
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: "#212121",
-    "&:hover": {
-      opacity: "0.6",
-    },
-    marginRight: theme.spacing(2),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(2),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 1),
-    height: "100%",
-    position: "absolute",
-    display: "flex",
-    alignItems: "center",
-  },
-
-  inputInput: {
-    padding: theme.spacing(1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    [theme.breakpoints.up("lg")]: {
-      width: "40ch",
-    },
+    backgroundColor: Colors.blackShade2,
   },
   selected: {
     backgroundColor: "#A239EA !important",
   },
 }))
 
-const DrawerLeft = (props) => {
-  const { history } = props
+const DrawerLeft = ({ history, showDrawerLeft, location }) => {
+  useEffect(() => {
+    handleDrawerToggle()
+  }, [showDrawerLeft])
+
+  //logout
+  const { logout } = useContext(AuthContext)
+  const handleLogout = () => {
+    logout()
+  }
+  /////
 
   const classes = useStyles()
-  const [mobileOpen, setMobileOpen] = React.useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const urlNameToindex = {
     feed: 0,
@@ -111,7 +60,7 @@ const DrawerLeft = (props) => {
     messages: 5,
   }
 
-  const pathnames = props.location.pathname.split("/").filter((x) => x)
+  const pathnames = location.pathname.split("/").filter((x) => x)
 
   const [selectedIndex, setSelectedIndex] = React.useState(urlNameToindex[pathnames] || 0)
   const handleDrawerToggle = () => {
@@ -129,6 +78,7 @@ const DrawerLeft = (props) => {
       icon: <FeedSVG size="1.2rem" />,
       onClick: (event) => {
         handleListItemClick(event, 0)
+        handleDrawerToggle()
         history.push("")
       },
     },
@@ -137,6 +87,7 @@ const DrawerLeft = (props) => {
       icon: <ProjectSVG size="1.2rem" />,
       selected: 1,
       onClick: (event) => {
+        handleDrawerToggle()
         handleListItemClick(event, 1)
         history.push("/projects")
       },
@@ -146,6 +97,7 @@ const DrawerLeft = (props) => {
       icon: <ProfileSVG size="1.2rem" />,
       selected: 2,
       onClick: (event) => {
+        handleDrawerToggle()
         handleListItemClick(event, 2)
         history.push("/profile")
       },
@@ -155,6 +107,7 @@ const DrawerLeft = (props) => {
       icon: <ContestSVG size="1.2rem" />,
       selected: 3,
       onClick: (event) => {
+        handleDrawerToggle()
         handleListItemClick(event, 3)
         history.push("/contest")
       },
@@ -164,6 +117,7 @@ const DrawerLeft = (props) => {
       icon: <SavedContestSVG size="1.2rem" />,
       selected: 4,
       onClick: (event) => {
+        handleDrawerToggle()
         handleListItemClick(event, 4)
         history.push("/savedcontest")
       },
@@ -173,6 +127,7 @@ const DrawerLeft = (props) => {
       icon: <MessageSVG size="1.2rem" />,
       selected: 5,
       onClick: (event) => {
+        handleDrawerToggle()
         handleListItemClick(event, 5)
         history.push("/messages")
       },
@@ -199,7 +154,7 @@ const DrawerLeft = (props) => {
           const { text, icon, onClick, selected } = item
           return (
             <ListItem button classes={{ selected: classes.selected }} selected={selectedIndex === selected} onClick={onClick} key={index}>
-              {icon && <ListItemIcon>{icon}</ListItemIcon>}
+              <ListItemIcon>{icon}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           )
@@ -211,36 +166,6 @@ const DrawerLeft = (props) => {
   return (
     <>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar} color="primary" elevation={0}>
-        <Toolbar>
-          <IconButton color="inherit" edge="start" onClick={handleDrawerToggle} className={classes.menuButton}>
-            <MenuIcon />
-          </IconButton>
-          <Hidden smDown>
-            <div>
-              <Typography variant="caption" color="textSecondary">
-                Today
-              </Typography>
-              <Typography variant="body2" color="textPrimary">
-                {moment().format("dddd, Do MMMM YY")}
-              </Typography>
-            </div>
-          </Hidden>
-
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                input: classes.inputInput,
-              }}
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
-
       <nav className={classes.drawer}>
         <Hidden smUp>
           <Drawer
@@ -256,6 +181,20 @@ const DrawerLeft = (props) => {
             }}
           >
             {drawer}
+            <div style={{ display: "flex", alignItems: "flex-end", flexGrow: 1 }}>
+              <ListItem
+                button
+                onClick={() => {
+                  handleLogout()
+                }}
+                style={{ backgroundColor: "goldenrod" }}
+              >
+                <ListItemIcon style={{ minWidth: "32px" }}>
+                  <LogoutSVG size="1.2rem" />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </ListItem>
+            </div>
           </Drawer>
         </Hidden>
         <Hidden xsDown>

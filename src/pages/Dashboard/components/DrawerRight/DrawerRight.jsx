@@ -1,21 +1,13 @@
-import React from "react"
+import React, { useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import Drawer from "@material-ui/core/Drawer"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import List from "@material-ui/core/List"
-import Typography from "@material-ui/core/Typography"
-import Divider from "@material-ui/core/Divider"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemText from "@material-ui/core/ListItemText"
-import ListItemAvatar from "@material-ui/core/ListItemAvatar"
-import Avatar from "@material-ui/core/Avatar"
-import Hidden from "@material-ui/core/Hidden"
+import { Drawer, CssBaseline, List, Typography, Divider, ListItem, ListItemText, ListItemAvatar, Avatar, Hidden } from "@material-ui/core"
+
 import { Colors } from "../../../../styles/Colors"
 import { withRouter } from "react-router-dom"
 import { Notification as NotificationSVG } from "../../../../assets/Icons/Icons"
 import { Logout as LogoutSVG } from "../../../../assets/Icons/Icons"
 import { ChatMessage as ChatMessageSVG } from "../../../../assets/Icons/Icons"
-
+import { AuthContext } from "../../../../context/AuthContext"
 import { customHistory } from "../../../../App"
 
 const drawerWidth = 300
@@ -29,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     backgroundColor: Colors.blackShade1,
   },
-  // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   avatar: {
     margin: theme.spacing(1, 2),
@@ -65,7 +56,11 @@ const chat = [
 
 const DrawerRight = (props) => {
   const classes = useStyles()
+  const { logout } = useContext(AuthContext)
 
+  const handleLogout = () => {
+    logout()
+  }
   return (
     <div>
       <CssBaseline />
@@ -96,11 +91,8 @@ const DrawerRight = (props) => {
                 size="1.1rem"
                 cursor="pointer"
                 onClick={() => {
-                  customHistory.push("/signin")
+                  handleLogout()
                 }}
-                // style={{
-                //   cursor: "pointer",
-                // }}
               />
             </div>
           </div>
