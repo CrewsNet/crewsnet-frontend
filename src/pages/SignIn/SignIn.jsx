@@ -27,6 +27,7 @@ import useGoogleAuth from "../../data-access/useGoogleAuth/useGoogleAuth"
 import useLogin from "../../data-access/useLogin/useLogin"
 import GoogleLogin from "react-google-login"
 import { PATH, GITHUB_CLIENT_ID, GITHUB_REDIRECT_URL } from "../../constants/constants"
+import axios from "axios"
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation])
