@@ -110,10 +110,16 @@ const SignIn = ({ history }) => {
     await onLogin({ email, password })
   }
   const handleGithubLogin = async () => {
-    const response = await axios.get(`https://github.com/login/oauth/authorize`, {
-      client_id: GITHUB_CLIENT_ID,
-      redirect_uri: GITHUB_REDIRECT_URL,
-    })
+    const response = await axios.get(
+      `https://github.com/login/oauth/authorize`,
+      {
+        client_id: GITHUB_CLIENT_ID,
+        redirect_uri: GITHUB_REDIRECT_URL,
+        path: PATH,
+        scope: "user:email",
+      },
+      { headers: { "X-Requested-With": "XMLHttpRequest" } }
+    )
     console.log(response)
   }
 
