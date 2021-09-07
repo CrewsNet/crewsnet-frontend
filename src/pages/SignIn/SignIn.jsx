@@ -111,7 +111,7 @@ const SignIn = ({ history }) => {
   }
   const handleGithubLogin = async () => {
     const response = await axios.get(
-      `https://github.com/login/oauth/authorize`,
+      `http://github.com/login/oauth/authorize`,
       {
         client_id: GITHUB_CLIENT_ID,
         redirect_uri: GITHUB_REDIRECT_URL,
