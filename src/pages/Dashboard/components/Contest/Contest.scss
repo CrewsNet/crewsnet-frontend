@@ -6,7 +6,7 @@
 
 .container {
   display: flex;
-  justify-content: space-around;
+  // justify-content: space-around;
   padding: 10px;
   margin: 10px;
 }
@@ -14,7 +14,7 @@
 .card {
   position: relative;
   height: 293px;
-  width: 270px;
+  width: 262px;
   justify-content: space-between;
   padding: 20px;
   margin: 10px;
@@ -22,11 +22,7 @@
   flex-direction: column;
   border-radius: 15px;
   background: rgb(37, 36, 36);
-  background: linear-gradient(
-    313deg,
-    rgba(37, 36, 36, 1) 0%,
-    rgba(32, 32, 32, 1) 58%
-  );
+  background: linear-gradient(313deg, rgba(37, 36, 36, 1) 0%, rgba(32, 32, 32, 1) 58%);
 
   .bookmark {
     position: absolute;
@@ -59,8 +55,29 @@
 }
 
 @media (max-width: 598px) {
+  .container {
+    justify-content: center;
+  }
   .card {
     width: 350px;
     height: 280px;
+  }
+}
+
+@media (max-width: 1210px) and (min-width: 960px) {
+  .grid-card {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    width: 240px;
+  }
+}
+
+@media (max-width: 910px) and (min-width: 598px) {
+  .grid-card {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    width: 240px;
   }
 }

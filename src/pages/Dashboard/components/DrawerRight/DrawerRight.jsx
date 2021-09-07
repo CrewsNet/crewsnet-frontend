@@ -1,16 +1,28 @@
-import React, { useContext } from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import { Drawer, CssBaseline, List, Typography, Divider, ListItem, ListItemText, ListItemAvatar, Avatar, Hidden } from "@material-ui/core"
+import React, { useContext, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Drawer,
+  CssBaseline,
+  List,
+  Typography,
+  Divider,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  Hidden,
+} from "@material-ui/core";
 
-import { Colors } from "../../../../styles/Colors"
-import { withRouter } from "react-router-dom"
-import { Notification as NotificationSVG } from "../../../../assets/Icons/Icons"
-import { Logout as LogoutSVG } from "../../../../assets/Icons/Icons"
-import { ChatMessage as ChatMessageSVG } from "../../../../assets/Icons/Icons"
-import { AuthContext } from "../../../../context/AuthContext"
-import { customHistory } from "../../../../App"
+import { Colors } from "../../../../styles/Colors";
+import { withRouter } from "react-router-dom";
+import { Notification as NotificationSVG } from "../../../../assets/Icons/Icons";
+import { Logout as LogoutSVG } from "../../../../assets/Icons/Icons";
+import { ChatMessage as ChatMessageSVG } from "../../../../assets/Icons/Icons";
+import { AuthContext } from "../../../../context/AuthContext";
+import { customHistory } from "../../../../App";
+import useUser from "../../../../data-access/useUser/useUser";
 
-const drawerWidth = 300
+const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -25,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1, 2),
   },
-}))
+}));
 
 const chat = [
   {
@@ -52,15 +64,19 @@ const chat = [
     email: "Lorem",
     unreadMessage: true,
   },
-]
+];
 
 const DrawerRight = (props) => {
-  const classes = useStyles()
-  const { logout } = useContext(AuthContext)
+  const classes = useStyles();
+  const { logout } = useContext(AuthContext);
+  const { getUser, user } = useUser();
 
+  useEffect(() => {
+    getUser();
+  }, []);
   const handleLogout = () => {
-    logout()
-  }
+    logout();
+  };
   return (
     <div>
       <CssBaseline />
@@ -74,10 +90,14 @@ const DrawerRight = (props) => {
           anchor="right"
         >
           <div className={classes.toolbar} style={{ display: "flex", alignItems: "center" }}>
-            <Avatar alt="" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className={classes.avatar} />
+            <Avatar
+              alt=""
+              src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+              className={classes.avatar}
+            />
             <div>
-              <p style={{ margin: "0", fontSize: "14px" }}>Ujjwal Garg</p>
-              <p style={{ margin: "0", color: "grey", fontSize: "10px" }}>ujjwalgarg.252@gmail.com</p>
+              <p style={{ margin: "0", fontSize: "14px" }}>{user && user.name}</p>
+              <p style={{ margin: "0", color: "grey", fontSize: "10px" }}>{user && user.email}</p>
             </div>
             <div
               style={{
@@ -91,7 +111,7 @@ const DrawerRight = (props) => {
                 size="1.1rem"
                 cursor="pointer"
                 onClick={() => {
-                  handleLogout()
+                  handleLogout();
                 }}
               />
             </div>
@@ -121,7 +141,7 @@ const DrawerRight = (props) => {
             </div>
             <List style={{ padding: 0 }}>
               {chat.map((user, index) => {
-                const { avatarUrl, name, email, unreadMessage } = user
+                const { avatarUrl, name, email, unreadMessage } = user;
 
                 return (
                   <div key={index}>
@@ -161,14 +181,14 @@ const DrawerRight = (props) => {
                     </ListItem>
                     <Divider variant="middle" component="li" />
                   </div>
-                )
+                );
               })}
             </List>
           </div>
         </Drawer>
       </Hidden>
     </div>
-  )
-}
+  );
+};
 
-export default withRouter(DrawerRight)
+export default withRouter(DrawerRight);
