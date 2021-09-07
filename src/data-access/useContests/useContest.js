@@ -6,7 +6,6 @@ import axios from "axios";
 const useContest = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isUpdated, setIsUpdated] = useState(false);
   const [contests, setContests] = useState([]);
   const [savedContests, setSavedContests] = useState([]);
   const [message, setMessage] = useState("");
@@ -34,7 +33,7 @@ const useContest = () => {
   };
 
   const saveContest = async (contestData) => {
-    // setIsUpdating(true);
+    setIsUpdating(true);
     setMessage(" ");
     const cookie = cookies.get(COOKIE_NAME);
     try {
@@ -46,10 +45,11 @@ const useContest = () => {
         data: contestData,
       });
       const body = await response.data;
-      console.log(body.data);
+      // console.log(body.data);
       setKey(body.data);
+      setIsUpdating(false);
       // await getContest();
-      // setIsUpdated(true);
+
       if (response.status === 200) {
         setMessage("Success");
       }
@@ -113,7 +113,6 @@ const useContest = () => {
     key,
     isLoading,
     isUpdating,
-    isUpdated,
     message,
     setMessage,
     getContest,
