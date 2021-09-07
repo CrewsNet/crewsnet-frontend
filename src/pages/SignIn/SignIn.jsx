@@ -104,14 +104,10 @@ const SignIn = ({ history }) => {
 
   const { isLoading, message, setMessage, onLogin } = useLogin()
   const { responseErrorGoogle, responseSuccessGoogle } = useGoogleAuth()
-
+  console.log(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`)
   const handleLogin = async () => {
     await onLogin({ email, password })
   }
-  // const handleGithubLogin = async () => {
-  //   const response = await axios.get(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`)
-  //   console.log(response)
-  // }
 
   const classes = useStyles()
   console.log(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`)
