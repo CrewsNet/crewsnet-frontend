@@ -72,7 +72,6 @@ const useContest = () => {
       // console.log(response);
       const body = await response.data
       console.log(body.data.savedContest)
-      setSavedContests(body.data.savedContest)
       setIsUpdating(false)
       if (response.status === 200) {
         setMessage("Success")

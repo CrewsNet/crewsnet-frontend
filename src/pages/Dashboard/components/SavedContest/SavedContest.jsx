@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Colors } from "../../../../styles/Colors";
-import { Typography, Grid, CircularProgress } from "@material-ui/core";
-import BookmarkBorderRoundedIcon from "@material-ui/icons/BookmarkBorderRounded";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
-import "../Contest/Contest.scss";
-import { useImmer } from "use-immer";
-import useContest from "../../../../data-access/useContests/useContest";
-import moment from "moment";
+import React, { useEffect, useState } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import { Colors } from "../../../../styles/Colors"
+import { Typography, Grid, CircularProgress } from "@material-ui/core"
+import BookmarkBorderRoundedIcon from "@material-ui/icons/BookmarkBorderRounded"
+import BookmarkIcon from "@material-ui/icons/Bookmark"
+import "../Contest/Contest.scss"
+import { useImmer } from "use-immer"
+import useContest from "../../../../data-access/useContests/useContest"
+import moment from "moment"
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -16,20 +16,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: Colors.blackShade1,
     minHeight: "100vh",
   },
-}));
+}))
 
 const SavedContest = () => {
-  const classes = useStyles();
-  const { isLoading, isUpdating, savedContests, unSaveContest, getSavedContest } = useContest();
-  const [state, setState] = useImmer({
-    contestSaved: false,
-    key: [],
-  });
-  useEffect(() => getSavedContest(), []);
+  const classes = useStyles()
+  const { isLoading, isUpdating, savedContests, unSaveContest, getSavedContest } = useContest()
+  const [hiddenIndexes, setHiddenIndexes] = useState([])
+  useEffect(() => getSavedContest(), [])
 
-  const handleContestUnSaving = async (savedContests, key) => {
-    await unSaveContest(savedContests);
-  };
+  const handleContestUnSaving = async (savedContests, index) => {
+    await unSaveContest(savedContests)
+    setHiddenIndexes((prevState) => [...prevState, index])
+  }
 
   if (isLoading) {
     return (
@@ -43,21 +41,21 @@ const SavedContest = () => {
       >
         <CircularProgress color="secondary" style={{ width: "100px", height: "auto" }} />
       </div>
-    );
+    )
   }
 
   return (
     <div className={classes.content}>
       <Grid container className="container">
-        {savedContests.map((contests, key) => {
-          const { name, site, start_time, end_time } = contests;
+        {savedContests.map((contests, index) => {
+          const { name, site, start_time, end_time } = contests
           return (
-            <Grid item xl={4} key={key} className="grid-card">
+            <Grid item xl={4} key={index} className={`grid-card ${hiddenIndexes.includes(index) ? "hide-card" : ""}`}>
               <div className="card">
                 <div
                   className="bookmark"
                   onClick={() => {
-                    handleContestUnSaving(contests, key);
+                    handleContestUnSaving(contests, index)
                   }}
                 >
                   <BookmarkIcon fontSize="large" />
@@ -75,11 +73,11 @@ const SavedContest = () => {
                 </div>
               </div>
             </Grid>
-          );
+          )
         })}
       </Grid>
     </div>
-  );
-};
+  )
+}
 
-export default SavedContest;
+export default SavedContest

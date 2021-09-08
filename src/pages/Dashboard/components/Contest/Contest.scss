@@ -7,15 +7,29 @@
 .container {
   display: flex;
   // justify-content: space-around;
-  padding: 10px;
-  margin: 10px;
+  padding: 7px;
+  margin: 7px;
 }
 
 .hide-card {
-  display: none;
+  animation: custom_hide 0.8s linear forwards;
+}
+
+@keyframes custom_hide {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    position: absolute;
+    transform: translateX(-1000px) scale(0);
+  }
 }
 
 .card {
+  transition: all 200ms ease-in-out;
   position: relative;
   height: 293px;
   width: 262px;
