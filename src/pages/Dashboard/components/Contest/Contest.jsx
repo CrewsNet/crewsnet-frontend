@@ -76,7 +76,7 @@ const Contest = () => {
                     </div>
                     <div className="contest-date">
                       <Typography variant="h3">{moment(start_time).format("DD")}</Typography>
-                      <Typography variant="subtitle1">{moment(start_time).format("MMMM")}</Typography>
+                      <Typography variant="subtitle1">{moment(start_time).format("MMMM - YY")}</Typography>
                     </div>
                     <div className="contest">
                       <div className="contest-site">{site}</div>
