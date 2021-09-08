@@ -7,6 +7,7 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import "../Contest/Contest.scss";
 import { useImmer } from "use-immer";
 import useContest from "../../../../data-access/useContests/useContest";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -49,7 +50,7 @@ const SavedContest = () => {
     <div className={classes.content}>
       <Grid container className="container">
         {savedContests.map((contests, key) => {
-          const { name, site, start_time } = contests;
+          const { name, site, start_time, end_time } = contests;
           return (
             <Grid item xl={4} key={key} className="grid-card">
               <div className="card">
@@ -62,13 +63,15 @@ const SavedContest = () => {
                   <BookmarkIcon fontSize="large" />
                 </div>
                 <div className="contest-date">
-                  <Typography variant="h3">08</Typography>
-                  <Typography variant="subtitle1">June</Typography>
+                  <Typography variant="h3">{moment(start_time).format("DD")}</Typography>
+                  <Typography variant="subtitle1">{moment(start_time).format("MMMM")}</Typography>
                 </div>
                 <div className="contest">
                   <div className="contest-site">{site}</div>
                   <div className="contest-name">{name}</div>
-                  <div className="contest-time">7:30pm-10:30pm</div>
+                  <div className="contest-time">
+                    {moment(start_time).format("hh:mm A")} - {moment(end_time).format("hh:mm A")}
+                  </div>
                 </div>
               </div>
             </Grid>

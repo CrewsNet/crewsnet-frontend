@@ -7,6 +7,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import "./Contest.scss";
 import { useImmer } from "use-immer";
 import useContest from "../../../../data-access/useContests/useContest";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -19,12 +20,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Contest = () => {
   const classes = useStyles();
-  const { isLoading, isUpdating, isUpdated, contests, getContest, saveContest, unSaveContest, key } = useContest();
+  const { isLoading, isUpdating, contests, getContest, saveContest, unSaveContest, key } = useContest();
 
-  const [state, setState] = useImmer({
-    contestSaved: false,
-    key: [],
-  });
+  const [state, setState] = useState(false);
   useEffect(async () => {
     getContest();
     // saveContest();
@@ -53,30 +51,37 @@ const Contest = () => {
     <div className={classes.content}>
       <Grid container className="container">
         {contests.map((contest, keys) => {
-          const { name, site, start_time } = contest;
-          console.log(key[1]?.url);
+          const { name, site, start_time, end_time } = contest;
+
+          const response = key.filter((el) => el.url === contest.url);
           return (
-            <Grid item xl={4} className="grid-card" key={keys}>
-              <div className="card">
-                <div
-                  className="bookmark"
-                  onClick={() => {
-                    handleContestSaving(contest, keys);
-                  }}
-                >
-                  <BookmarkBorderRoundedIcon fontSize="large" />
-                </div>
-                <div className="contest-date">
-                  <Typography variant="h3">08</Typography>
-                  <Typography variant="subtitle1">June</Typography>
-                </div>
-                <div className="contest">
-                  <div className="contest-site">{site}</div>
-                  <div className="contest-name">{name}</div>
-                  <div className="contest-time">7:30pm-10:30pm</div>
-                </div>
-              </div>
-            </Grid>
+            <>
+              {new Date().getTime() < new Date(start_time).getTime() && (
+                <Grid item xl={4} className={`grid-card ${isUpdating ? "card-display" : ""}`} key={keys}>
+                  <div className="card">
+                    <div
+                      className="bookmark"
+                      onClick={() => {
+                        handleContestSaving(contest, keys);
+                      }}
+                    >
+                      <BookmarkBorderRoundedIcon fontSize="large" />
+                    </div>
+                    <div className="contest-date">
+                      <Typography variant="h3">{moment(start_time).format("DD")}</Typography>
+                      <Typography variant="subtitle1">{moment(start_time).format("MMMM")}</Typography>
+                    </div>
+                    <div className="contest">
+                      <div className="contest-site">{site}</div>
+                      <div className="contest-name">{name}</div>
+                      <div className="contest-time">
+                        {moment(start_time).format("hh:mm A")} - {moment(end_time).format("hh:mm A")}
+                      </div>
+                    </div>
+                  </div>
+                </Grid>
+              )}
+            </>
           );
         })}
       </Grid>

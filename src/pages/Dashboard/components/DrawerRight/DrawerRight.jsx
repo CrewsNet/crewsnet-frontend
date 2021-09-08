@@ -81,8 +81,8 @@ const DrawerRight = (props) => {
           <div className={classes.toolbar} style={{ display: "flex", alignItems: "center" }}>
             <Avatar alt="" src={user?.photo} className={classes.avatar} />
             <div>
-              <p style={{ margin: "0", fontSize: "14px" }}>{user && user.name}</p>
-              <p style={{ margin: "0", color: "grey", fontSize: "10px" }}>{user && user.email}</p>
+              <p style={{ margin: "0", fontSize: "14px" }}>{user?.name}</p>
+              <p style={{ margin: "0", color: "grey", fontSize: "10px" }}>{user?.email}</p>
             </div>
             <div
               style={{

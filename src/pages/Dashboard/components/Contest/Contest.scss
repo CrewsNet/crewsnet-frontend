@@ -11,6 +11,10 @@
   margin: 10px;
 }
 
+.card-display {
+  display: none;
+}
+
 .card {
   position: relative;
   height: 293px;
@@ -62,6 +66,9 @@
     width: 350px;
     height: 280px;
   }
+  .card-display {
+    display: none;
+  }
 }
 
 @media (max-width: 1210px) and (min-width: 960px) {
@@ -71,6 +78,9 @@
     justify-content: center;
     width: 240px;
   }
+  .card-display {
+    display: none;
+  }
 }
 
 @media (max-width: 910px) and (min-width: 598px) {
@@ -79,5 +89,8 @@
     flex-grow: 1;
     justify-content: center;
     width: 240px;
+  }
+  .card-display {
+    display: none;
   }
 }
