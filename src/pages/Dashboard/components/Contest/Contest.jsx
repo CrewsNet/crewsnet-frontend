@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Colors } from "../../../../styles/Colors";
-import { Typography, Grid, CircularProgress } from "@material-ui/core";
-import BookmarkBorderRoundedIcon from "@material-ui/icons/BookmarkBorderRounded";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import "./Contest.scss";
-import { useImmer } from "use-immer";
-import useContest from "../../../../data-access/useContests/useContest";
-import moment from "moment";
+import React, { useEffect, useState } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import { Colors } from "../../../../styles/Colors"
+import { Typography, Grid, CircularProgress } from "@material-ui/core"
+import BookmarkBorderRoundedIcon from "@material-ui/icons/BookmarkBorderRounded"
+import CheckCircleIcon from "@material-ui/icons/CheckCircle"
+import "./Contest.scss"
+import { useImmer } from "use-immer"
+import useContest from "../../../../data-access/useContests/useContest"
+import moment from "moment"
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -16,21 +16,28 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: Colors.blackShade1,
     minHeight: "100vh",
   },
-}));
+}))
 
 const Contest = () => {
-  const classes = useStyles();
-  const { isLoading, isUpdating, contests, getContest, saveContest, unSaveContest, key } = useContest();
+  const classes = useStyles()
+  const { isUpdating, contests, getContest, saveContest, savedContests, getSavedContest } = useContest()
+  const [isLoading, setIsLoading] = useState(false)
+  const [hiddenIndexes, setHiddenIndexes] = useState([])
 
-  const [state, setState] = useState(false);
-  useEffect(async () => {
-    getContest();
+  const getInitialData = async () => {
+    setIsLoading(true)
+    await getSavedContest()
+    await getContest()
+    setIsLoading(false)
     // saveContest();
-  }, []);
+  }
+  useEffect(() => getInitialData(), [])
 
-  const handleContestSaving = async (contest, key) => {
-    await saveContest(contest);
-  };
+  const handleContestSaving = async (contest, index) => {
+    await saveContest(contest)
+    setHiddenIndexes((prevState) => [...prevState, index])
+  }
+  console.log(hiddenIndexes)
 
   if (isLoading) {
     return (
@@ -44,25 +51,25 @@ const Contest = () => {
       >
         <CircularProgress color="secondary" style={{ width: "100px", height: "auto" }} />
       </div>
-    );
+    )
   }
 
   return (
     <div className={classes.content}>
       <Grid container className="container">
-        {contests.map((contest, keys) => {
-          const { name, site, start_time, end_time } = contest;
+        {contests.map((contest, index) => {
+          const { name, site, start_time, end_time } = contest
 
-          const response = key.filter((el) => el.url === contest.url);
-          return (
-            <>
-              {new Date().getTime() < new Date(start_time).getTime() && (
-                <Grid item xl={4} className={`grid-card ${isUpdating ? "card-display" : ""}`} key={keys}>
+          if (new Date().getTime() < new Date(start_time).getTime()) {
+            const result = savedContests.filter((saved_contest) => saved_contest.start_time === start_time && saved_contest.site === site)
+            if (result.length === 0) {
+              return (
+                <Grid item xl={4} className={`grid-card ${hiddenIndexes.includes(index) ? "hide-card" : ""}`} key={index}>
                   <div className="card">
                     <div
                       className="bookmark"
                       onClick={() => {
-                        handleContestSaving(contest, keys);
+                        handleContestSaving(contest, index)
                       }}
                     >
                       <BookmarkBorderRoundedIcon fontSize="large" />
@@ -80,13 +87,13 @@ const Contest = () => {
                     </div>
                   </div>
                 </Grid>
-              )}
-            </>
-          );
+              )
+            }
+          }
         })}
       </Grid>
     </div>
-  );
-};
+  )
+}
 
-export default Contest;
+export default Contest
