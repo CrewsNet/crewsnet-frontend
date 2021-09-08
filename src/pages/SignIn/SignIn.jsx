@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import clsx from "clsx"
 import { Box, Grid, TextField, Button, Typography, Checkbox, FormControlLabel, IconButton, CircularProgress } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
@@ -27,6 +27,7 @@ import useGoogleAuth from "../../data-access/useGoogleAuth/useGoogleAuth"
 import useLogin from "../../data-access/useLogin/useLogin"
 import GoogleLogin from "react-google-login"
 import { PATH, GITHUB_CLIENT_ID, GITHUB_REDIRECT_URL } from "../../constants/constants"
+import { AuthContext } from "../../context/AuthContext"
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation])
@@ -101,17 +102,18 @@ const SignIn = ({ history }) => {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-
+  const { isAuthenticated } = useContext(AuthContext)
   const { isLoading, message, setMessage, onLogin } = useLogin()
   const { responseErrorGoogle, responseSuccessGoogle } = useGoogleAuth()
 
   const handleLogin = async () => {
     await onLogin({ email, password })
   }
-  // const handleGithubLogin = async () => {
-  //   const response = await axios.get(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`)
-  //   console.log(response)
-  // }
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push("/dashboard")
+    }
+  }, [])
 
   const classes = useStyles()
   return (

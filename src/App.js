@@ -27,9 +27,9 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Switch>
           <Route path="/" exact component={LandingPage}></Route>
-          <Route path="/signin" exact component={SignIn}></Route>
           <Route path="/signup" exact component={SignUp}></Route>
           <AuthProvider>
+            <Route path="/signin" exact component={SignIn}></Route>
             <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
           </AuthProvider>
           <Route component={PageNotFound}></Route>
