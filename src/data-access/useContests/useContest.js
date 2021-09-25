@@ -15,12 +15,12 @@ const useContest = () => {
     setIsLoading(true)
     setMessage(" ")
     try {
-      console.log(process.env.REACT_APP_NODE_BACKEND_URL)
+      // console.log(process.env.REACT_APP_NODE_BACKEND_URL);
       const response = await fetch(`${process.env.REACT_APP_NODE_BACKEND_URL}/user/contest`, {
         method: "get",
       })
       const body = await response.json()
-      // console.log(body)
+      // console.log(body);
       setIsLoading(false)
       if (response.status === 200) {
         setContests(body.data)
@@ -36,7 +36,7 @@ const useContest = () => {
     setMessage(" ")
     const cookie = cookies.get(COOKIE_NAME)
     try {
-      console.log(process.env.REACT_APP_NODE_BACKEND_URL)
+      // console.log(process.env.REACT_APP_NODE_BACKEND_URL);
       const response = await axios({
         method: "patch",
         url: `${process.env.REACT_APP_NODE_BACKEND_URL}/user/contest/save`,
@@ -44,9 +44,10 @@ const useContest = () => {
         data: contestData,
       })
       const body = await response.data
-      // console.log(body)
-      await getContest()
+      // console.log(body.data);
       setIsUpdating(false)
+      // await getContest();
+
       if (response.status === 200) {
         setMessage("Success")
       }
@@ -59,18 +60,18 @@ const useContest = () => {
     setIsUpdating(true)
     setMessage(" ")
     const cookie = cookies.get(COOKIE_NAME)
-    console.log(contestData)
+    // console.log(contestData);
     try {
-      console.log(process.env.REACT_APP_NODE_BACKEND_URL)
+      // console.log(process.env.REACT_APP_NODE_BACKEND_URL);
       const response = await axios({
         method: "patch",
         url: `${process.env.REACT_APP_NODE_BACKEND_URL}/user/contest/unSave`,
         headers: { Authorization: `Bearer ${cookie}` },
         data: contestData,
       })
-      console.log(response)
+      // console.log(response);
       const body = await response.data
-      // console.log(body)
+      console.log(body.data.savedContest)
       setIsUpdating(false)
       if (response.status === 200) {
         setMessage("Success")
@@ -86,7 +87,7 @@ const useContest = () => {
 
     const cookie = cookies.get(COOKIE_NAME)
     try {
-      console.log(process.env.REACT_APP_NODE_BACKEND_URL)
+      // console.log(process.env.REACT_APP_NODE_BACKEND_URL);
       const response = await axios({
         method: "get",
         url: `${process.env.REACT_APP_NODE_BACKEND_URL}/user/contest/getSave`,
@@ -105,7 +106,18 @@ const useContest = () => {
     }
   }
 
-  return { isLoading, isUpdating, message, setMessage, getContest, contests, savedContests, saveContest, unSaveContest, getSavedContest }
+  return {
+    isLoading,
+    isUpdating,
+    message,
+    setMessage,
+    getContest,
+    contests,
+    savedContests,
+    saveContest,
+    unSaveContest,
+    getSavedContest,
+  }
 }
 
 export default useContest
