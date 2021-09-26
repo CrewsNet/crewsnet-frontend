@@ -1,20 +1,30 @@
-import React, { useState, useEffect, useContext } from "react"
-import { withRouter } from "react-router-dom"
+import React, { useState, useEffect, useContext } from "react";
+import { withRouter } from "react-router-dom";
 
-import { List, ListItem, ListItemIcon, ListItemText, Typography, Hidden, Divider, CssBaseline, Drawer } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  Hidden,
+  Divider,
+  CssBaseline,
+  Drawer,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-import { Feed as FeedSVG } from "../../../../assets/Icons/Icons"
-import { Contest as ContestSVG } from "../../../../assets/Icons/Icons"
-import { Profile as ProfileSVG } from "../../../../assets/Icons/Icons"
-import { Project as ProjectSVG } from "../../../../assets/Icons/Icons"
-import { SavedContest as SavedContestSVG } from "../../../../assets/Icons/Icons"
-import { Message as MessageSVG } from "../../../../assets/Icons/Icons"
-import { Logout as LogoutSVG } from "../../../../assets/Icons/Icons"
-import { Colors } from "../../../../styles/Colors"
-import { AuthContext } from "../../../../context/AuthContext"
+import { Feed as FeedSVG } from "../../../../assets/Icons/Icons";
+import { Contest as ContestSVG } from "../../../../assets/Icons/Icons";
+import { Profile as ProfileSVG } from "../../../../assets/Icons/Icons";
+import { Project as ProjectSVG } from "../../../../assets/Icons/Icons";
+import { SavedContest as SavedContestSVG } from "../../../../assets/Icons/Icons";
+import { Message as MessageSVG } from "../../../../assets/Icons/Icons";
+import { Logout as LogoutSVG } from "../../../../assets/Icons/Icons";
+import { Colors } from "../../../../styles/Colors";
+import { AuthContext } from "../../../../context/AuthContext";
 
-const drawerWidth = 280
+const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -34,22 +44,22 @@ const useStyles = makeStyles((theme) => ({
   selected: {
     backgroundColor: "#A239EA !important",
   },
-}))
+}));
 
 const DrawerLeft = ({ history, showDrawerLeft, location }) => {
   useEffect(() => {
-    handleDrawerToggle()
-  }, [showDrawerLeft])
+    handleDrawerToggle();
+  }, [showDrawerLeft]);
 
   //logout
-  const { logout } = useContext(AuthContext)
+  const { logout } = useContext(AuthContext);
   const handleLogout = () => {
-    logout()
-  }
+    logout();
+  };
   /////
 
-  const classes = useStyles()
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const classes = useStyles();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const urlNameToindex = {
     feed: 0,
@@ -58,18 +68,18 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
     contest: 3,
     savedcontest: 4,
     messages: 5,
-  }
+  };
 
-  const pathnames = location.pathname.split("/").filter((x) => x)
+  const pathnames = location.pathname.split("/").filter((x) => x);
 
-  const [selectedIndex, setSelectedIndex] = React.useState(urlNameToindex[pathnames] || 0)
+  const [selectedIndex, setSelectedIndex] = React.useState(urlNameToindex[pathnames] || 0);
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
-  }
+    setMobileOpen(!mobileOpen);
+  };
 
   const handleListItemClick = (event, index) => {
-    setSelectedIndex(index)
-  }
+    setSelectedIndex(index);
+  };
 
   const itemsList = [
     {
@@ -77,9 +87,9 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       selected: 0,
       icon: <FeedSVG size="1.2rem" />,
       onClick: (event) => {
-        handleListItemClick(event, 0)
-        handleDrawerToggle()
-        history.push("")
+        handleListItemClick(event, 0);
+        handleDrawerToggle();
+        history.push("");
       },
     },
     {
@@ -87,9 +97,9 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       icon: <ProjectSVG size="1.2rem" />,
       selected: 1,
       onClick: (event) => {
-        handleDrawerToggle()
-        handleListItemClick(event, 1)
-        history.push("/projects")
+        handleDrawerToggle();
+        handleListItemClick(event, 1);
+        history.push("/projects");
       },
     },
     {
@@ -97,9 +107,9 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       icon: <ProfileSVG size="1.2rem" />,
       selected: 2,
       onClick: (event) => {
-        handleDrawerToggle()
-        handleListItemClick(event, 2)
-        history.push("/profile")
+        handleDrawerToggle();
+        handleListItemClick(event, 2);
+        history.push("/profile");
       },
     },
     {
@@ -107,9 +117,9 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       icon: <ContestSVG size="1.2rem" />,
       selected: 3,
       onClick: (event) => {
-        handleDrawerToggle()
-        handleListItemClick(event, 3)
-        history.push("/contest")
+        handleDrawerToggle();
+        handleListItemClick(event, 3);
+        history.push("/contest");
       },
     },
     {
@@ -117,9 +127,9 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       icon: <SavedContestSVG size="1.2rem" />,
       selected: 4,
       onClick: (event) => {
-        handleDrawerToggle()
-        handleListItemClick(event, 4)
-        history.push("/savedcontest")
+        handleDrawerToggle();
+        handleListItemClick(event, 4);
+        history.push("/savedcontest");
       },
     },
     {
@@ -127,15 +137,15 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       icon: <MessageSVG size="1.2rem" />,
       selected: 5,
       onClick: (event) => {
-        handleDrawerToggle()
-        handleListItemClick(event, 5)
-        history.push("/messages")
+        handleDrawerToggle();
+        handleListItemClick(event, 5);
+        history.push("/messages");
       },
     },
-  ]
+  ];
 
   const drawer = (
-    <div>
+    <>
       <div
         className={classes.toolbar}
         style={{
@@ -151,17 +161,39 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
       <Divider variant="middle" />
       <List component="nav" aria-label="main mailbox folders">
         {itemsList.map((item, index) => {
-          const { text, icon, onClick, selected } = item
+          const { text, icon, onClick, selected } = item;
           return (
-            <ListItem button classes={{ selected: classes.selected }} selected={selectedIndex === selected} onClick={onClick} key={index}>
+            <ListItem
+              button
+              classes={{ selected: classes.selected }}
+              selected={selectedIndex === selected}
+              onClick={onClick}
+              key={index}
+            >
               <ListItemIcon>{icon}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
-          )
+          );
         })}
       </List>
-    </div>
-  )
+      <Hidden mdUp>
+        <div style={{ display: "flex", alignItems: "flex-end", flexGrow: 1 }}>
+          <ListItem
+            button
+            onClick={() => {
+              handleLogout();
+            }}
+            style={{ backgroundColor: "goldenrod" }}
+          >
+            <ListItemIcon style={{ minWidth: "32px" }}>
+              <LogoutSVG size="1.2rem" />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
+        </div>
+      </Hidden>
+    </>
+  );
 
   return (
     <>
@@ -181,20 +213,6 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
             }}
           >
             {drawer}
-            <div style={{ display: "flex", alignItems: "flex-end", flexGrow: 1 }}>
-              <ListItem
-                button
-                onClick={() => {
-                  handleLogout()
-                }}
-                style={{ backgroundColor: "goldenrod" }}
-              >
-                <ListItemIcon style={{ minWidth: "32px" }}>
-                  <LogoutSVG size="1.2rem" />
-                </ListItemIcon>
-                <ListItemText primary="Logout" />
-              </ListItem>
-            </div>
           </Drawer>
         </Hidden>
         <Hidden xsDown>
@@ -210,7 +228,7 @@ const DrawerLeft = ({ history, showDrawerLeft, location }) => {
         </Hidden>
       </nav>
     </>
-  )
-}
+  );
+};
 
-export default withRouter(DrawerLeft)
+export default withRouter(DrawerLeft);

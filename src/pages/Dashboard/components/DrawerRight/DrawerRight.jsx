@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import { Drawer, CssBaseline, List, Typography, Divider, ListItem, ListItemText, ListItemAvatar, Avatar, Hidden } from "@material-ui/core"
 
@@ -9,6 +9,7 @@ import { Logout as LogoutSVG } from "../../../../assets/Icons/Icons"
 import { ChatMessage as ChatMessageSVG } from "../../../../assets/Icons/Icons"
 import { AuthContext } from "../../../../context/AuthContext"
 import { customHistory } from "../../../../App"
+import useUser from "../../../../data-access/useUser/useUser"
 
 const drawerWidth = 300
 
@@ -57,7 +58,11 @@ const chat = [
 const DrawerRight = (props) => {
   const classes = useStyles()
   const { logout } = useContext(AuthContext)
+  const { getUser, user } = useUser()
 
+  useEffect(() => {
+    getUser()
+  }, [])
   const handleLogout = () => {
     logout()
   }
@@ -74,10 +79,10 @@ const DrawerRight = (props) => {
           anchor="right"
         >
           <div className={classes.toolbar} style={{ display: "flex", alignItems: "center" }}>
-            <Avatar alt="" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className={classes.avatar} />
+            <Avatar alt="" src={user?.photo} className={classes.avatar} />
             <div>
-              <p style={{ margin: "0", fontSize: "14px" }}>Ujjwal Garg</p>
-              <p style={{ margin: "0", color: "grey", fontSize: "10px" }}>ujjwalgarg.252@gmail.com</p>
+              <p style={{ margin: "0", fontSize: "14px" }}>{user?.name}</p>
+              <p style={{ margin: "0", color: "grey", fontSize: "10px" }}>{user?.email}</p>
             </div>
             <div
               style={{
