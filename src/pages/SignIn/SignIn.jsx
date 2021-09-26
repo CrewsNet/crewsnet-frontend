@@ -1,36 +1,53 @@
-import React, { useState, useContext, useEffect } from "react"
-import clsx from "clsx"
-import { Box, Grid, TextField, Button, Typography, Checkbox, FormControlLabel, IconButton, CircularProgress } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
-import { Colors } from "../../styles/Colors"
-import { Swiper, SwiperSlide } from "swiper/react"
-import "swiper/swiper-bundle.min.css"
-import "./SignIn.scss"
+import React, { useState, useContext, useEffect } from "react";
+import clsx from "clsx";
+import {
+  Box,
+  Grid,
+  TextField,
+  Button,
+  Typography,
+  Checkbox,
+  FormControlLabel,
+  IconButton,
+  CircularProgress,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Colors } from "../../styles/Colors";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.min.css";
+import "./SignIn.scss";
 // swiper core styles
-import "swiper/swiper.min.css"
+import "swiper/swiper.min.css";
 // modules styles
-import "swiper/components/navigation/navigation.min.css"
-import "swiper/components/pagination/pagination.min.css"
+import "swiper/components/navigation/navigation.min.css";
+import "swiper/components/pagination/pagination.min.css";
 // import Swiper core and required modules
-import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper"
-import LoginSVG1 from "../../assets/images/login1.svg"
-import LoginSVG2 from "../../assets/images/login2.svg"
-import { Google as GoogleSVG, Github as GithubSVG } from "../../assets/Icons/Icons"
-import useMediaQuery from "@material-ui/core/useMediaQuery"
-import OutlinedInput from "@material-ui/core/OutlinedInput"
-import InputLabel from "@material-ui/core/InputLabel"
-import InputAdornment from "@material-ui/core/InputAdornment"
-import FormControl from "@material-ui/core/FormControl"
-import Visibility from "@material-ui/icons/Visibility"
-import VisibilityOff from "@material-ui/icons/VisibilityOff"
-import useGoogleAuth from "../../data-access/useGoogleAuth/useGoogleAuth"
-import useLogin from "../../data-access/useLogin/useLogin"
-import GoogleLogin from "react-google-login"
-import { PATH, GITHUB_CLIENT_ID, GITHUB_REDIRECT_URL } from "../../constants/constants"
-import { AuthContext } from "../../context/AuthContext"
+import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper";
+import LoginSVG1 from "../../assets/images/login1.svg";
+import LoginSVG2 from "../../assets/images/login2.svg";
+import {
+  Google as GoogleSVG,
+  Github as GithubSVG,
+} from "../../assets/Icons/Icons";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import useGoogleAuth from "../../data-access/useGoogleAuth/useGoogleAuth";
+import useLogin from "../../data-access/useLogin/useLogin";
+import GoogleLogin from "react-google-login";
+import {
+  PATH,
+  GITHUB_CLIENT_ID,
+  GITHUB_REDIRECT_URL,
+} from "../../constants/constants";
+import { AuthContext } from "../../context/AuthContext";
 
 // install Swiper modules
-SwiperCore.use([Autoplay, Pagination, Navigation])
+SwiperCore.use([Autoplay, Pagination, Navigation]);
 
 const useStyles = makeStyles({
   signInContainer: {
@@ -93,34 +110,38 @@ const useStyles = makeStyles({
     fontWeight: "600",
     fontSize: "1.2rem",
   },
-})
+});
 
 const SignIn = ({ history }) => {
-  const matches960 = useMediaQuery("(max-width:960px)")
-  const matches375 = useMediaQuery("(max-width:375px)")
-  const matches1280 = useMediaQuery("(max-width:1280px)")
-  const [showPassword, setShowPassword] = useState(false)
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-  const { isAuthenticated } = useContext(AuthContext)
-  const { isLoading, message, setMessage, onLogin } = useLogin()
-  const { responseErrorGoogle, responseSuccessGoogle } = useGoogleAuth()
-  console.log(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`)
+  const matches960 = useMediaQuery("(max-width:960px)");
+  const matches375 = useMediaQuery("(max-width:375px)");
+  const matches1280 = useMediaQuery("(max-width:1280px)");
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const { isAuthenticated } = useContext(AuthContext);
+  const { isLoading, message, setMessage, onLogin } = useLogin();
+  const { responseErrorGoogle, responseSuccessGoogle } = useGoogleAuth();
+  console.log(
+    `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`
+  );
   const handleLogin = async () => {
-    await onLogin({ email, password })
-  }
-<<<<<<< HEAD
-=======
+    await onLogin({ email, password });
+  };
   useEffect(() => {
     if (isAuthenticated) {
-      history.push("/dashboard")
+      history.push("/dashboard");
     }
-  }, [])
->>>>>>> eec512845335c875a11ae88d5685ff610d27cbee
+  }, []);
 
-  const classes = useStyles()
+  const classes = useStyles();
   return (
-    <Box className={clsx(classes.signInContainer, "login-page")} display="flex" alignItems="center" justifyContent="center">
+    <Box
+      className={clsx(classes.signInContainer, "login-page")}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
       <Grid
         container
         md={9}
@@ -130,7 +151,18 @@ const SignIn = ({ history }) => {
           border: `rgb(38, 38, 38,0.2) 1px solid`,
         }}
       >
-        <Grid item p={0} container xs={12} lg={6} style={{ height: matches1280 ? "100vh" : "" }} className={classes.signIn} display="flex" justifyContent="center" alignContent="center">
+        <Grid
+          item
+          p={0}
+          container
+          xs={12}
+          lg={6}
+          style={{ height: matches1280 ? "100vh" : "" }}
+          className={classes.signIn}
+          display="flex"
+          justifyContent="center"
+          alignContent="center"
+        >
           <Grid xs={11} sm={6} md={8} item style={{ position: "relative" }}>
             <Typography
               variant="h3"
@@ -158,15 +190,34 @@ const SignIn = ({ history }) => {
               Get connected with the world of Projects!
             </Typography>
             {/* <TextField id="outlined-basic" label="Email" variant="outlined" /> */}
-            <Grid xs={12} container justifyContent="space-between" style={{ marginTop: "1rem" }}>
+            <Grid
+              xs={12}
+              container
+              justifyContent="space-between"
+              style={{ marginTop: "1rem" }}
+            >
               <Grid item xs={6}>
-                <Button variant="contained" startIcon={<GoogleSVG size="1.7rem" />} className={clsx(classes.signInButtons, "google-button")}>
+                <Button
+                  variant="contained"
+                  startIcon={<GoogleSVG size="1.7rem" />}
+                  className={clsx(classes.signInButtons, "google-button")}
+                >
                   {!matches375 ? "with Google" : "Sign In"}
-                  <GoogleLogin disabled={false} className="google-login" clientId="915209891946-f0hlo4lerlgj7oumkv86r7v2693ntq60.apps.googleusercontent.com" buttonText={!matches375 ? "with Google" : "Sign In"} onSuccess={responseSuccessGoogle} onFailure={responseErrorGoogle} cookiePolicy={`single_host_origin`} />
+                  <GoogleLogin
+                    disabled={false}
+                    className="google-login"
+                    clientId="915209891946-f0hlo4lerlgj7oumkv86r7v2693ntq60.apps.googleusercontent.com"
+                    buttonText={!matches375 ? "with Google" : "Sign In"}
+                    onSuccess={responseSuccessGoogle}
+                    onFailure={responseErrorGoogle}
+                    cookiePolicy={`single_host_origin`}
+                  />
                 </Button>
               </Grid>
               <Grid item xs={6} style={{ textAlign: "end" }}>
-                <a href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`}>
+                <a
+                  href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`}
+                >
                   <Button
                     variant="contained"
                     // onClick={() => {
@@ -189,7 +240,12 @@ const SignIn = ({ history }) => {
                 marginBottom: "1.4rem",
               }}
             >
-              <Typography variant="caption" color="initial" textAlign="center" className={classes.legend}>
+              <Typography
+                variant="caption"
+                color="initial"
+                textAlign="center"
+                className={classes.legend}
+              >
                 or Login with Email
               </Typography>
             </Grid>
@@ -197,58 +253,90 @@ const SignIn = ({ history }) => {
               <TextField
                 type="email"
                 onChange={(e) => {
-                  setEmail(e.target.value)
+                  setEmail(e.target.value);
                 }}
                 className={classes.inputFields}
                 id="outlined-basic"
                 label="Email"
                 variant="outlined"
               />
-              <FormControl className={clsx(classes.margin, classes.textField, classes.inputFields)} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+              <FormControl
+                className={clsx(
+                  classes.margin,
+                  classes.textField,
+                  classes.inputFields
+                )}
+                variant="outlined"
+              >
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? "text" : "password"}
                   endAdornment={
                     <InputAdornment position="end">
-                      <IconButton aria-label="toggle password visibility" onClick={() => setShowPassword(!showPassword)} onMouseDown={(e) => e.preventDefault()} edge="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setShowPassword(!showPassword)}
+                        onMouseDown={(e) => e.preventDefault()}
+                        edge="end"
+                      >
                         {showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                   }
                   labelWidth={70}
                   onChange={(e) => {
-                    setPassword(e.target.value)
+                    setPassword(e.target.value);
                   }}
                 />
               </FormControl>
             </Grid>
             <Grid xs={12}>
               <Typography variant="small" color="initial">
-                <FormControlLabel control={<Checkbox name="rememberMe" />} label={"Remember Me"} />
+                <FormControlLabel
+                  control={<Checkbox name="rememberMe" />}
+                  label={"Remember Me"}
+                />
               </Typography>
             </Grid>
-            <Grid item xs={12} style={{ textAlign: "center", marginTop: "0.8rem" }}>
+            <Grid
+              item
+              xs={12}
+              style={{ textAlign: "center", marginTop: "0.8rem" }}
+            >
               <Button
                 variant="contained"
                 style={{ textAlign: "center" }}
                 onClick={() => {
-                  handleLogin()
+                  handleLogin();
                 }}
                 className={clsx(classes.signInButtons, classes.loginButton)}
               >
-                {isLoading ? <CircularProgress color="secondary" style={{ width: "35px", height: "auto" }} /> : "Login"}
+                {isLoading ? (
+                  <CircularProgress
+                    color="secondary"
+                    style={{ width: "35px", height: "auto" }}
+                  />
+                ) : (
+                  "Login"
+                )}
               </Button>
             </Grid>
             <Grid xs={12} style={{ marginTop: "0.7rem" }}>
-              <Typography variant="caption" color="initial" style={{ letterSpacing: "0.6px" }}>
+              <Typography
+                variant="caption"
+                color="initial"
+                style={{ letterSpacing: "0.6px" }}
+              >
                 Not registered yet ? &nbsp;&nbsp;
                 <Typography
                   variant="caption"
                   style={{ fontWeight: "700", cursor: "pointer" }}
                   color="initial"
                   onClick={() => {
-                    history.push("/signup")
+                    history.push("/signup");
                   }}
                 >
                   Create an Account
@@ -288,7 +376,7 @@ const SignIn = ({ history }) => {
         )}
       </Grid>
     </Box>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
