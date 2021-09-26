@@ -105,15 +105,18 @@ const SignIn = ({ history }) => {
   const { isAuthenticated } = useContext(AuthContext)
   const { isLoading, message, setMessage, onLogin } = useLogin()
   const { responseErrorGoogle, responseSuccessGoogle } = useGoogleAuth()
-
+  console.log(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URL}?path=${PATH}&scope=user:email`)
   const handleLogin = async () => {
     await onLogin({ email, password })
   }
+<<<<<<< HEAD
+=======
   useEffect(() => {
     if (isAuthenticated) {
       history.push("/dashboard")
     }
   }, [])
+>>>>>>> eec512845335c875a11ae88d5685ff610d27cbee
 
   const classes = useStyles()
   return (
